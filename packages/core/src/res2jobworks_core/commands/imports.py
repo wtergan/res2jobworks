@@ -80,6 +80,8 @@ def import_job(
     source_text: str | None = None,
     source_type: str = "markdown",
     job_id: str | None = None,
+    source_url: str | None = None,
+    source_metadata: dict | None = None,
 ) -> CommandEnvelope:
     """Import a job description text or file into canonical SQLite state."""
     command = "jobs.import"
@@ -87,6 +89,7 @@ def import_job(
         "database_path": str(database_path),
         "source_path": str(source_path) if source_path is not None else None,
         "source_type": source_type,
+        "source_url": source_url,
     }
     try:
         title, content = read_source(source_path=source_path, source_text=source_text)
@@ -113,7 +116,8 @@ def import_job(
             source_type=source_type,
             title=title,
             content=content,
-            metadata={"imported_by": command},
+            source_url=source_url,
+            metadata={"imported_by": command, **(source_metadata or {})},
         )
         warnings = []
         if employer == "Unknown":

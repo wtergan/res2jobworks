@@ -44,7 +44,7 @@
 
 | Task ID | Plan | Task | State | Depends On | Owner/Lane | Validation |
 |---|---|---|---|---|---|---|
-| M4.T1 | `.vault/plans/004-interfaces-and-agent-wrappers-2026-06-03.md` | Build clients and generated wrappers | ready_next | M3.T1 | implementer/design-iterator | `pytest -q tests/parity`, browser/accessibility checks |
+| M4.T1 | `.vault/plans/004-interfaces-and-agent-wrappers-2026-06-03.md` | Build clients and generated wrappers | complete | M3.T1 | implementer/design-iterator | `pytest -q tests/parity`, browser/accessibility checks |
 
 ### M5: Automation Follow-Up
 
@@ -55,7 +55,7 @@
 
 | Task ID | Plan | Task | State | Depends On | Owner/Lane | Validation |
 |---|---|---|---|---|---|---|
-| M5.T1 | `.vault/plans/005-browser-automation-human-review-2026-06-03.md` | Add safe browser automation | planned | M3.T1, M4.T1 | implementer/security | `pytest -q tests/automation tests/security` |
+| M5.T1 | `.vault/plans/005-browser-automation-human-review-2026-06-03.md` | Add safe browser automation | complete | M3.T1, M4.T1 | implementer/security | `pytest -q tests/automation tests/security` |
 
 ### M6: Phase 2 Documents
 

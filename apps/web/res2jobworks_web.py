@@ -9,6 +9,7 @@ from html import escape
 from pathlib import Path
 
 from apps.dashboard_read_model import DashboardJob, load_dashboard_jobs
+from res2jobworks_automation import review_state_label
 from res2jobworks_core.contracts import CommandEnvelope
 
 
@@ -99,6 +100,7 @@ def _job_detail(dashboard_job: DashboardJob) -> str:
     job = detail.data["job"]
     evaluations = detail.data["evaluations"]
     applications = detail.data["applications"]
+    sources = "\n".join(_source_line(source) for source in detail.data["job_sources"])
     evaluation_blocks = "\n".join(_evaluation_block(item) for item in evaluations)
     status = applications[-1]["current_status"] if applications else "untracked"
     if not evaluation_blocks:
@@ -107,9 +109,19 @@ def _job_detail(dashboard_job: DashboardJob) -> str:
 <article class="job-detail">
   <h3>{escape(job["title"])}</h3>
   <p class="meta">{escape(job["employer"])} · <span>{escape(status)}</span></p>
+  <ul class="sources">
+    {sources}
+  </ul>
   {evaluation_blocks}
 </article>
 """
+
+
+def _source_line(source: dict) -> str:
+    label = source["source_url"] or source["title"]
+    review_state = review_state_label(source["metadata"].get("review_state"))
+    suffix = f" · {review_state}" if review_state else ""
+    return f"<li><b>Evidence source</b>: {escape(label + suffix)}</li>"
 
 
 def _evaluation_block(evaluation: dict) -> str:
@@ -276,12 +288,13 @@ def _document(*, title: str, body: str) -> str:
       margin-top: 1rem;
       padding-top: 1rem;
     }}
-    .evaluation p, .evaluation ul {{ margin: 0; }}
-    .evaluation ul {{
+    .evaluation p, .evaluation ul, .sources {{ margin: 0; }}
+    .evaluation ul, .sources {{
       display: grid;
       gap: 0.5rem;
       padding-left: 1.25rem;
     }}
+    .sources {{ margin-top: 1rem; }}
     .score {{
       align-items: baseline;
       display: flex;

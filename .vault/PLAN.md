@@ -2,7 +2,7 @@
 project: "res2jobWorks"
 date: "2026-06-04"
 status: "Active Implementation"
-progress: 86
+progress: 95
 ---
 
 # res2jobWorks Project Roadmap
@@ -18,6 +18,7 @@ strategic human-facing summaries in the Obsidian project note.
 - Plan 002 SQLite persistence is complete: explicit SQLite migrations, repository APIs, fixture seeding, status constraints, source fallback, privacy/path guards, and database tests are implemented without exposing workflow commands as available; the two-plan refactorer gate is also published.
 - Plan 003 import/evaluate/export workflows are complete: command handlers initialize workspaces, import fixture-safe profile/job sources, create deterministic cited evaluations, track applications, and generate Markdown/CSV exports from SQLite.
 - Plan 004 interfaces and wrappers are complete: CLI direct commands and `res2jobworks run`, read-only TUI/web dashboards, and registry-generated agent wrappers all call shared core command envelopes.
+- Plan 005 browser automation is complete locally: browser-free capture contracts import reviewed job text through `jobs.import`, persist sanitized source URL/timestamp/artifact metadata in canonical `job_sources` records, expose CLI/agent registry commands, and keep fill-review plans non-submitting by default.
 - The locked product direction is MVP 1 evaluation and tracking, with resume tailoring, cover letters, and document generation deferred to phase 2.
 - The current planning packet was grounded in the prior Codex session `019e8a43-f147-7a81-8062-3f2b3c53641d`, the repo starter files, and the two Obsidian project notes listed below.
 
@@ -40,7 +41,7 @@ strategic human-facing summaries in the Obsidian project note.
 | `.vault/plans/002-sqlite-evaluation-tracking-model-2026-06-03.md` | SQLite schema, migrations, repositories, and domain contracts | Complete | Published with follow-up refactorer gate |
 | `.vault/plans/003-import-evaluate-export-workflows-2026-06-03.md` | Profile/job import, rubric evaluation, citations, and Markdown/CSV exports | Complete | Published |
 | `.vault/plans/004-interfaces-and-agent-wrappers-2026-06-03.md` | CLI, TUI, local web dashboard, and generated agent wrappers over shared commands | Complete | Commit/push plan 004, then run two-plan refactorer gate |
-| `.vault/plans/005-browser-automation-human-review-2026-06-03.md` | Safe job-source capture and application-assist automation with human review | Planned | Start after manual import/evaluation paths are reliable |
+| `.vault/plans/005-browser-automation-human-review-2026-06-03.md` | Safe job-source capture and application-assist automation with human review | Complete | Commit and publish |
 | `.vault/plans/006-tailoring-documents-phase2-2026-06-03.md` | Resume tailoring, cover letters, application answers, and document rendering | Deferred | Start only after MVP 1 evaluation/tracking is proven |
 
 ## Active Goal Runs
@@ -63,7 +64,7 @@ strategic human-facing summaries in the Obsidian project note.
 - [x] A SQLite-backed core can initialize a workspace, persist profiles/jobs/evaluations/applications, and preserve status history.
 - [x] Import/evaluate/export workflows create cited evaluation records and Markdown/CSV exports without treating exports as canonical data.
 - [x] CLI, TUI, web dashboard, and generated agent wrappers call the same command registry and return the same stable command envelope.
-- [ ] Browser automation is limited to extraction, draft, fill, review, and evidence capture unless a user explicitly confirms submission outside the default product path.
+- [x] Browser automation is limited to extraction, draft, fill, review, and evidence capture unless a user explicitly confirms submission outside the default product path.
 - [ ] Phase 2 document generation starts from existing profile/evaluation evidence and does not invent private claims.
 
 ## Architecture Snapshot
@@ -119,6 +120,7 @@ flowchart LR
 | MVP client boundaries | Keep CLI, TUI, web, automation, and agent wrappers thin over core command contracts | 2026-06-03 | `.vault/decisions/mvp-client-boundaries-decision-2026-06-03.md` |
 | No default auto-submit | Preserve explicit human control for applications and browser automation | 2026-06-03 | `.vault/decisions/mvp-no-autosubmit-default-decision-2026-06-03.md` |
 | Local web dashboard stack | Keep MVP web local and inspectable by rendering static semantic HTML from core command envelopes | 2026-06-03 | `.vault/decisions/local-web-dashboard-stack-2026-06-03.md` |
+| Browser automation safety boundary | Limit automation to capture, draft, fill, review, and evidence capture unless a future explicit non-default submission path is designed and reviewed | 2026-06-03 | `.vault/decisions/browser-automation-safety-boundary-2026-06-03.md` |
 
 ## Risk Register
 
@@ -135,7 +137,7 @@ flowchart LR
 
 - Research: `.vault/research/project-context-2026-06-03.md`, `.vault/research/predecessor-res2jobfit-and-career-ops-2026-06-03.md`
 - Decisions: `.vault/decisions/foundational-architecture-2026-06-03.md`, `.vault/decisions/mvp-core-sqlite-source-of-truth-decision-2026-06-03.md`, `.vault/decisions/mvp-client-boundaries-decision-2026-06-03.md`, `.vault/decisions/mvp-no-autosubmit-default-decision-2026-06-03.md`
-- Solutions: `.vault/solutions/`
+- Solutions: `.vault/solutions/browser-evidence-capture-2026-06-03.md`
 - Encounters: `.vault/encounters/`
 - Goal runs: `.vault/goals/goal-mvp-evaluation-tracking-2026-06-03/`
 - Visual companions: `.vault/visuals/001-roadmap-architecture-2026-06-03.html`

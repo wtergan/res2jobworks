@@ -10,6 +10,11 @@ import sys
 from collections.abc import Callable, Mapping, Sequence
 from pathlib import Path
 
+from res2jobworks_automation import (
+    capture_job,
+    capture_text,
+    prepare_fill_review,
+)
 from res2jobworks_core.commands import (
     add_application,
     evaluate_job,
@@ -374,6 +379,42 @@ def _runner_application_export(inputs: Mapping[str, str]) -> CommandEnvelope:
     )
 
 
+def _runner_automation_capture_job(inputs: Mapping[str, str]) -> CommandEnvelope:
+    capture = capture_text(
+        source_url=_require_input(inputs, "source_url"),
+        text=_require_input(inputs, "source_text"),
+        captured_at=inputs.get("captured_at"),
+        artifact_paths=_tuple_input(inputs.get("artifact_paths")),
+    )
+    return capture_job(
+        Path(_require_input(inputs, "database_path")),
+        capture=capture,
+        source_type=inputs.get("source_type", "browser_capture"),
+    )
+
+
+def _runner_automation_prepare_fill_review(
+    inputs: Mapping[str, str],
+) -> CommandEnvelope:
+    return prepare_fill_review(
+        fields=_json_mapping_input(_require_input(inputs, "fields_json")),
+        review_state=_require_input(inputs, "review_state"),
+    )
+
+
+def _tuple_input(value: str | None) -> tuple[str, ...]:
+    if not value:
+        return ()
+    return tuple(item.strip() for item in value.split(",") if item.strip())
+
+
+def _json_mapping_input(value: str) -> dict[str, str]:
+    parsed = json.loads(value)
+    if not isinstance(parsed, dict):
+        raise ValueError("fields_json must be a JSON object")
+    return {str(key): str(raw_value) for key, raw_value in parsed.items()}
+
+
 _RUNNERS: dict[str, CommandHandler] = {
     "workspace.init": _runner_workspace_init,
     "profile.import": _runner_profile_import,
@@ -386,6 +427,8 @@ _RUNNERS: dict[str, CommandHandler] = {
     "applications.update": _runner_application_update,
     "applications.list": _runner_application_list,
     "applications.export": _runner_application_export,
+    "automation.capture_job": _runner_automation_capture_job,
+    "automation.prepare_fill_review": _runner_automation_prepare_fill_review,
 }
 
 

@@ -2,11 +2,11 @@
 
 ## Current Status
 
-- Phase: implementation
-- Current milestone: M4
-- Current task: M4.T1
-- Last action: 2026-06-04 - Plan 004 published and post-Plan-003/004 refactorer gate completed.
-- Next action: Commit/push the refactorer/review-fix follow-up, then continue to Plan 005 only after the gate is published.
+- Phase: publishing
+- Current milestone: M5
+- Current task: M5.T1
+- Last action: 2026-06-04 - Plan 005 passed validator, reviewer, security, accessibility, and pattern gates after hardening fixes.
+- Next action: Commit and publish the browser automation feature.
 
 ## Execution Ledger
 
@@ -21,6 +21,8 @@
 - 2026-06-04 - Fixed plan 003 review findings for registry-declared `rubric_id` compatibility and duplicate deterministic ID failures returning raw SQLite exceptions.
 - 2026-06-04 - Implemented plan 004 CLI/TUI/web/wrapper surfaces over core command envelopes and published as `38545d5`.
 - 2026-06-04 - Ran the required post-plan-004 refactorer gate; extracted shared dashboard read orchestration and fixed reviewer/accessibility contract drift.
+- 2026-06-04 - Implemented plan 005 browser automation with browser-free capture contracts, core `jobs.import` integration, persisted sanitized job-source evidence metadata, CLI/agent registry commands, no-submit fill-review, UI evidence labels, and browser evidence solution capture.
+- 2026-06-04 - Completed Plan 005 review hardening: unified command identity, redacted sensitive URL parts, validated evidence paths, rejected credential-like fill fields, stripped terminal control sequences, and removed stale handoff/cache artifacts.
 
 ## Validation Evidence
 
@@ -53,6 +55,14 @@
 | 2026-06-04 | Plan 004 review follow-up | `uv run --extra dev pytest -q` | pass | `70 passed` |
 | 2026-06-04 | Plan 004 review follow-up | `uv run --extra dev ruff check .` | pass | `All checks passed!` |
 | 2026-06-04 | Plan 004 review follow-up | `uv build` | pass | Built sdist and wheel |
+| 2026-06-04 | Plan 005 extraction/evidence gate | `uv run --extra dev pytest -q tests/automation/test_browser_capture_should_import_job_through_core_workflow.py tests/automation/test_evidence_capture_should_store_source_metadata.py tests/automation tests/security tests/workflows/test_job_import_should_store_browser_evidence_metadata.py` | pass | `8 passed` |
+| 2026-06-04 | Plan 005 local gate | `uv run --extra dev pytest -q` | pass | `80 passed` |
+| 2026-06-04 | Plan 005 local gate | `uv run --extra dev ruff check .` | pass | `All checks passed!` |
+| 2026-06-04 | Plan 005 security/accessibility hardening | `uv run --extra dev pytest -q tests/automation tests/security tests/tui tests/web tests/workflows/test_job_import_should_store_browser_evidence_metadata.py tests/core/test_available_sqlite_commands_should_accept_database_path.py tests/core/test_registry_entries_should_have_required_metadata.py tests/wrappers/test_available_agent_commands_should_match_runner_inputs.py` | pass | `20 passed` after URL redaction, path validation, credential-field rejection, terminal control stripping, and readable review labels |
+| 2026-06-04 | Plan 005 security/accessibility hardening | `uv run --extra dev pytest -q` | pass | `84 passed` |
+| 2026-06-04 | Plan 005 security/accessibility hardening | `uv run --extra dev ruff check .` | pass | `All checks passed!` |
+| 2026-06-04 | Plan 005 security/accessibility hardening | `uv build` | pass | Built sdist and wheel after hardening |
+| 2026-06-04 | Plan 005 hardened command smoke | `automation.capture_job` and `automation.prepare_fill_review` | pass | Capture stripped sensitive URL query/fragment material; fill-review blocked `password` without echoing the secret value |
 
 ## Review Ledger
 
@@ -78,9 +88,14 @@
 | 2026-06-04 | Plan 004 | accessibility-auditor | issues found | Error page landmark and repeated evaluation label findings fixed |
 | 2026-06-04 | Plan 004 | pattern-detector | request changes | Stale wrapper docs and overclaimed TUI/web/wrapper plan text fixed |
 | 2026-06-04 | Plans 003-004 | refactorer | changes made | Extracted shared dashboard read model for TUI/web while preserving core command boundaries |
+| 2026-06-04 | Plan 005 | validator | approved | Focused tests, full tests, Ruff, build, and CLI smoke passed |
+| 2026-06-04 | Plan 005 | reviewer | approved | Command identity unified on `automation.capture_job`; cache cleanup verified |
+| 2026-06-04 | Plan 005 | security | approved | URL/path/fill-field and terminal-control hardening resolved prior blockers |
+| 2026-06-04 | Plan 005 | accessibility-auditor | approved | Readable review labels and safe evidence rendering approved |
+| 2026-06-04 | Plan 005 | pattern-detector | approved | Registry/client pattern, no-submit boundary, and vault consistency approved |
 
 ## Durable Captures
 
-- Decisions: `.vault/decisions/foundational-architecture-2026-06-03.md`, `.vault/decisions/mvp-core-sqlite-source-of-truth-decision-2026-06-03.md`, `.vault/decisions/mvp-client-boundaries-decision-2026-06-03.md`, `.vault/decisions/mvp-no-autosubmit-default-decision-2026-06-03.md`, `.vault/decisions/sqlite-data-layer-2026-06-03.md`, `.vault/decisions/evaluation-strategy-2026-06-03.md`, `.vault/decisions/local-web-dashboard-stack-2026-06-03.md`
-- Solutions: `.vault/solutions/bootstrap-core-contracts-solution-2026-06-04.md`, `.vault/solutions/sqlite-repository-pattern-2026-06-03.md`, `.vault/solutions/cited-evaluation-workflow-2026-06-03.md`, `.vault/solutions/command-wrapper-generation-2026-06-03.md`
+- Decisions: `.vault/decisions/foundational-architecture-2026-06-03.md`, `.vault/decisions/mvp-core-sqlite-source-of-truth-decision-2026-06-03.md`, `.vault/decisions/mvp-client-boundaries-decision-2026-06-03.md`, `.vault/decisions/mvp-no-autosubmit-default-decision-2026-06-03.md`, `.vault/decisions/sqlite-data-layer-2026-06-03.md`, `.vault/decisions/evaluation-strategy-2026-06-03.md`, `.vault/decisions/local-web-dashboard-stack-2026-06-03.md`, `.vault/decisions/browser-automation-safety-boundary-2026-06-03.md`
+- Solutions: `.vault/solutions/bootstrap-core-contracts-solution-2026-06-04.md`, `.vault/solutions/sqlite-repository-pattern-2026-06-03.md`, `.vault/solutions/cited-evaluation-workflow-2026-06-03.md`, `.vault/solutions/command-wrapper-generation-2026-06-03.md`, `.vault/solutions/browser-evidence-capture-2026-06-03.md`
 - Encounters: `.vault/encounters/browser-verification-chrome-missing-2026-06-04.md`

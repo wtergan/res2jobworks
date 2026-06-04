@@ -190,6 +190,36 @@ commands:
       - tui
       - web
       - agent
+  - id: automation.capture_job
+    description: Capture reviewed browser job text and import it through core workflow.
+    phase: mvp1
+    status: available
+    inputs:
+      - database_path
+      - source_url
+      - source_text
+      - captured_at
+      - artifact_paths
+      - source_type
+    outputs:
+      - capture
+      - job
+      - job_source
+    clients:
+      - cli
+      - agent
+  - id: automation.prepare_fill_review
+    description: Prepare application fill instructions that require human review.
+    phase: mvp1
+    status: available
+    inputs:
+      - fields_json
+      - review_state
+    outputs:
+      - fill_plan
+    clients:
+      - cli
+      - agent
   - id: dashboard.tui
     description: Launch the local TUI dashboard client.
     phase: mvp1

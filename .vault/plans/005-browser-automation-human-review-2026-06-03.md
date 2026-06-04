@@ -1,5 +1,5 @@
 ---
-status: Planned
+status: Complete
 priority: Medium
 date: 2026-06-03
 worktree_required: yes
@@ -42,9 +42,9 @@ goal_ready: true
   - [x] `.vault/research/project-context-2026-06-03.md`
 - Decisions:
   - [x] `.vault/decisions/foundational-architecture-2026-06-03.md`
-  - [ ] `.vault/decisions/browser-automation-safety-boundary-2026-06-03.md`
+  - [x] `.vault/decisions/browser-automation-safety-boundary-2026-06-03.md`
 - Solutions:
-  - [ ] `.vault/solutions/browser-evidence-capture-2026-06-03.md`
+  - [x] `.vault/solutions/browser-evidence-capture-2026-06-03.md`
 - Encounters:
   - [ ] `.vault/encounters/browser-automation-encounter-2026-06-03.md`
 - Visual companion:
@@ -54,12 +54,12 @@ goal_ready: true
 
 ## Success Criteria
 
-- [ ] Browser automation can extract a job description into the same job import workflow used by manual text/file imports.
-- [ ] Evidence capture stores source URL, captured text, timestamp, and optional screenshot/path metadata without becoming canonical outside SQLite.
-- [ ] Draft/fill/review assistance can prepare application fields for user review without submitting.
-- [ ] Commands and UI copy clearly label automation state and required human action.
-- [ ] Tests cover extraction adapters, blocked submission behavior, and audit records.
-- [ ] Security review confirms no credential/session data is checked in or logged unsafely.
+- [x] Browser automation can extract a job description into the same job import workflow used by manual text/file imports.
+- [x] Evidence capture stores sanitized source URL, captured text, timestamp, and optional validated screenshot/path metadata without becoming canonical outside SQLite.
+- [x] Draft/fill/review assistance can prepare application fields for user review without submitting.
+- [x] Commands and UI copy clearly label automation state and required human action.
+- [x] Tests cover extraction adapters, blocked submission behavior, and audit records.
+- [x] Security review confirms no credential/session data is checked in or logged unsafely.
 
 ## Architecture Diagram
 
@@ -108,7 +108,7 @@ capture -> review extracted text -> import -> evaluate -> draft/fill -> human re
 
 ## Execution Steps
 
-- [ ] Step 1: Record browser automation safety boundary
+- [x] Step 1: Record browser automation safety boundary
   - ACTION: Create ADR for allowed and disallowed automation behaviors.
   - IMPLEMENT: Name explicit user approval requirements and stop conditions.
   - FILES: `.vault/decisions/browser-automation-safety-boundary-2026-06-03.md`
@@ -116,7 +116,7 @@ capture -> review extracted text -> import -> evaluate -> draft/fill -> human re
   - GOTCHA: Do not leave submission behavior ambiguous.
   - VALIDATE: ADR review.
 
-- [ ] Step 2: Implement extraction adapter contracts
+- [x] Step 2: Implement extraction adapter contracts
   - ACTION: Add browser/source extraction interfaces and test fakes.
   - IMPLEMENT: Return captured text and metadata through command envelopes.
   - FILES: `packages/automation/`, `packages/core/src/res2jobworks_core/job_sources/`, `tests/automation/`
@@ -124,7 +124,7 @@ capture -> review extracted text -> import -> evaluate -> draft/fill -> human re
   - GOTCHA: Browser adapter should feed core import, not bypass it.
   - VALIDATE: Extraction adapter tests.
 
-- [ ] Step 3: Add evidence capture records
+- [x] Step 3: Add evidence capture records
   - ACTION: Persist source metadata and optional artifact paths.
   - IMPLEMENT: Store URL, capture timestamp, normalized text, and screenshot/file references where applicable.
   - FILES: `packages/core/`, migrations if schema needs extension
@@ -132,7 +132,7 @@ capture -> review extracted text -> import -> evaluate -> draft/fill -> human re
   - GOTCHA: Do not store secrets, cookies, or raw credential fields.
   - VALIDATE: Evidence persistence tests.
 
-- [ ] Step 4: Add draft/fill/review commands
+- [x] Step 4: Add draft/fill/review commands
   - ACTION: Generate application field drafts and prepare browser fill actions for review.
   - IMPLEMENT: Require explicit user review state before any external action.
   - FILES: `packages/automation/`, `commands/registry.yaml`, `apps/cli/`
@@ -140,7 +140,7 @@ capture -> review extracted text -> import -> evaluate -> draft/fill -> human re
   - GOTCHA: No submit command in default product path.
   - VALIDATE: Tests prove submit is blocked/unavailable by default.
 
-- [ ] Step 5: Add UI and documentation signals
+- [x] Step 5: Add UI and documentation signals
   - ACTION: Show automation state, source evidence, and review requirements in CLI/TUI/web.
   - IMPLEMENT: Keep wording operational and explicit.
   - FILES: `apps/cli/`, `apps/tui/`, `apps/web/`, `docs/browser-automation.md`
@@ -150,17 +150,17 @@ capture -> review extracted text -> import -> evaluate -> draft/fill -> human re
 
 ## Code Documentation Contract
 
-- [ ] Automation modules document safety boundaries and side effects.
-- [ ] Public automation commands document what they do not do.
-- [ ] Comments explain edge cases involving credentials, sessions, blocked submissions, or source evidence.
+- [x] Automation modules document safety boundaries and side effects.
+- [x] Public automation commands document what they do not do.
+- [x] Comments explain edge cases involving credentials, sessions, blocked submissions, or source evidence.
 
 ## Testing Strategy (TDD)
 
 ### TDD Contract
 
-- [ ] Red: write safety and extraction tests first
-- [ ] Green: implement minimal extraction/evidence behavior
-- [ ] Refactor: improve adapter boundaries while safety tests stay green
+- [x] Red: write safety and extraction tests first
+- [x] Green: implement minimal extraction/evidence behavior
+- [x] Refactor: improve adapter boundaries while safety tests stay green
 
 ### Test File Plan
 
@@ -197,7 +197,7 @@ capture -> review extracted text -> import -> evaluate -> draft/fill -> human re
   - `M5.T1` Add browser automation with human review
 - Dependencies:
   - `M5.T1` depends on `M3.T1` and `M4.T1`
-- Current state: planned
+- Current state: complete
 - Handoff source: `.vault/goals/goal-mvp-evaluation-tracking-2026-06-03/handoff.md`
 
 ## Verification Contract
@@ -216,6 +216,32 @@ capture -> review extracted text -> import -> evaluate -> draft/fill -> human re
   - validator pass
   - reviewer approve
   - security approve before any real-site automation
+  - accessibility approve
+  - pattern approve
+
+## Implementation Evidence
+
+- `packages/automation/src/res2jobworks_automation/` defines capture and fill-review contracts that return command envelopes, sanitize evidence inputs, and call core import workflows.
+- `commands/registry.yaml` exposes `automation.capture_job` and `automation.prepare_fill_review`; `apps/cli/res2jobworks_cli.py` dispatches both through `res2jobworks run`.
+- TUI and web detail views show captured source URL/readable review state from SQLite `job_sources` records.
+- `docs/browser-automation.md` and `packages/automation/README.md` document the no-submit boundary and evidence contract.
+
+## Validation Evidence
+
+- `uv run --extra dev pytest -q tests/automation tests/security tests/tui tests/web tests/workflows/test_job_import_should_store_browser_evidence_metadata.py tests/core/test_available_sqlite_commands_should_accept_database_path.py tests/core/test_registry_entries_should_have_required_metadata.py tests/wrappers/test_available_agent_commands_should_match_runner_inputs.py` -> `20 passed` after security/accessibility hardening.
+- `uv run --extra dev ruff check .` -> pass after security/accessibility hardening.
+- `uv run --extra dev pytest -q` -> `84 passed`
+- `uv build` -> built `dist/res2jobworks-0.1.0.tar.gz` and `dist/res2jobworks-0.1.0-py3-none-any.whl`
+- CLI smoke: `automation.capture_job` imported captured text with redacted URL/timestamp/relative artifact metadata; `automation.prepare_fill_review` returned `submission_allowed: false` for safe fields and rejected `password` without echoing the secret value.
+- Browser UI smoke with a real browser remains blocked on this machine because Chrome/Chromium is not installed; fixture/local command smoke covers the safe automation path until a browser runtime is available.
+
+## Review Evidence
+
+- Validator: approved after focused tests, full tests, Ruff, build, and CLI smoke.
+- Reviewer: approved after unifying capture command identity on `automation.capture_job` and removing generated caches.
+- Security: approved after URL redaction, evidence path validation, credential-field rejection, and TUI terminal-control stripping.
+- Accessibility: approved after readable review labels and safe UI evidence rendering.
+- Pattern detector: approved after command identity, cache cleanup, and handoff/vault consistency fixes.
 
 ## Goal Contract
 
@@ -282,3 +308,5 @@ Final evidence:
 ## Progress Log
 
 - 2026-06-03: Plan created from roadmap and foundational ADR.
+- 2026-06-04: Recorded browser automation safety ADR with explicit allowed, disallowed, review, evidence, and no-submit boundaries.
+- 2026-06-04: Implemented extraction/evidence core slice: captured job sources import through `jobs.import`, source URL/timestamp/artifact metadata persists in `job_sources`, and focused automation/security/core tests plus Ruff passed.
