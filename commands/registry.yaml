@@ -107,7 +107,6 @@ commands:
     status: available
     inputs:
       - database_path
-      - filters
     outputs:
       - jobs
     clients:
@@ -168,7 +167,6 @@ commands:
     status: available
     inputs:
       - database_path
-      - filters
     outputs:
       - applications
     clients:

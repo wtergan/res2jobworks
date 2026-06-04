@@ -10,7 +10,7 @@
 
 ## Latest Known State
 
-Plans 001, 002, and 003 are complete, committed, and published. The required two-plan refactorer gate after plan 002 is also published. Plan 004 is implemented and locally verified; it is ready for verifier review, commit, publish, and the next two-plan refactorer gate.
+Plans 001, 002, 003, and 004 are complete, committed, and published. The required two-plan refactorer gate after plan 002 is also published. The post-Plan-003/004 refactorer and review-fix follow-up is implemented and locally verified; it is ready to commit and publish.
 
 Implemented plan 002 scope:
 
@@ -36,6 +36,7 @@ Implemented plan 004 scope:
 - Full citation-backed `jobs.show` query envelopes for UI detail views.
 - Registry-driven wrapper generator for Codex and Hermes plus documented Claude/OpenCode/Gemini stubs.
 - Client parity tests proving CLI runner output matches direct core command envelopes.
+- Post-review fixes remove unimplemented `filters` from available registry metadata, add wrapper invocation parity, keep the web error path accessible, and correct stale wrapper/plan docs.
 
 ## Validation Evidence
 
@@ -53,6 +54,7 @@ Implemented plan 004 scope:
 - Plan 004 -> `uv build` built sdist and wheel
 - Plan 004 -> installed-wheel smoke passed for `res2jobworks run`, evaluation citations, and `res2jobworks-generate-wrappers`
 - Plan 004 browser MCP -> blocked by missing Chrome; encounter captured
+- Plan 004 refactor/review follow-up -> `26` focused tests, `70` full tests, Ruff, and build passed
 
 ## Review State
 
@@ -72,10 +74,9 @@ Plan 003 verifier state:
 
 ## Next Action
 
-1. Run Plan 004 verifier/reviewer/security/pattern checks and resolve findings.
-2. Commit plan 004 atomically with subject `FEAT: add client interfaces and wrappers`.
-3. Publish `main` to `wtergan/res2jobworks` using the API fast-forward path if the helper cannot push local-only commit objects.
-4. Run the required two-plan refactorer gate for plans 003 and 004.
+1. Commit the Plan 003/004 refactorer and review-fix follow-up.
+2. Publish `main` to `wtergan/res2jobworks` using the API fast-forward path if the helper cannot push local-only commit objects.
+3. Begin Plan 005 browser automation only after confirming the follow-up is published.
 
 ## Stop Conditions
 

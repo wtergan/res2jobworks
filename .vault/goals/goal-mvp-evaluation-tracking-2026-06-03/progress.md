@@ -5,8 +5,8 @@
 - Phase: implementation
 - Current milestone: M4
 - Current task: M4.T1
-- Last action: 2026-06-04 - Plan 003 verifier gates approved after reviewer fixes.
-- Next action: Commit/push plan 003, then begin `.vault/plans/004-interfaces-and-agent-wrappers-2026-06-03.md`.
+- Last action: 2026-06-04 - Plan 004 published and post-Plan-003/004 refactorer gate completed.
+- Next action: Commit/push the refactorer/review-fix follow-up, then continue to Plan 005 only after the gate is published.
 
 ## Execution Ledger
 
@@ -19,6 +19,8 @@
 - 2026-06-04 - Published plan 002 as `ab13d0a` and the required two-plan refactorer gate as `6fc7803`; redaction policy now lives in `res2jobworks_core._privacy`.
 - 2026-06-04 - Implemented plan 003 command workflows for workspace init, profile/job import, deterministic cited evaluation, application tracking, and Markdown/CSV exports.
 - 2026-06-04 - Fixed plan 003 review findings for registry-declared `rubric_id` compatibility and duplicate deterministic ID failures returning raw SQLite exceptions.
+- 2026-06-04 - Implemented plan 004 CLI/TUI/web/wrapper surfaces over core command envelopes and published as `38545d5`.
+- 2026-06-04 - Ran the required post-plan-004 refactorer gate; extracted shared dashboard read orchestration and fixed reviewer/accessibility contract drift.
 
 ## Validation Evidence
 
@@ -44,6 +46,13 @@
 | 2026-06-04 | Plan 003 local gate | `uv run --extra dev ruff check .` | pass | `All checks passed!` |
 | 2026-06-04 | Plan 003 package gate | `uv build` | pass | Built sdist and wheel with packaged command modules and updated registry |
 | 2026-06-04 | Plan 003 package gate | Fresh wheel workflow smoke from `/tmp` | pass | Seeded sample DB, created deterministic evaluation with 2 citations via registry-declared `rubric_id`, added application, exported CSV, verified duplicate export returned failure envelope, and confirmed `jobs.evaluate` status is `available` |
+| 2026-06-04 | Plan 004 local gate | `uv run --extra dev pytest -q tests/cli tests/tui tests/web tests/wrappers tests/parity` | pass | `10 passed` before refactor/review follow-up |
+| 2026-06-04 | Plan 004 local gate | `uv run --extra dev pytest -q` | pass | `68 passed` before refactor/review follow-up |
+| 2026-06-04 | Plan 004 package gate | `uv build` and installed-wheel smoke | pass | Console runner, cited evaluation, failure envelope, and wrapper generation worked from the wheel |
+| 2026-06-04 | Plan 004 review follow-up | `uv run --extra dev pytest -q tests/cli tests/tui tests/web tests/wrappers tests/parity tests/workflows` | pass | `26 passed` after dashboard read-model extraction, registry input fix, wrapper invocation parity, and accessibility error-page fix |
+| 2026-06-04 | Plan 004 review follow-up | `uv run --extra dev pytest -q` | pass | `70 passed` |
+| 2026-06-04 | Plan 004 review follow-up | `uv run --extra dev ruff check .` | pass | `All checks passed!` |
+| 2026-06-04 | Plan 004 review follow-up | `uv build` | pass | Built sdist and wheel |
 
 ## Review Ledger
 
@@ -63,9 +72,15 @@
 | 2026-06-04 | Plan 003 | reviewer | approved | Registry/handler compatibility and duplicate failure-envelope blockers fixed |
 | 2026-06-04 | Plan 003 | security | approved | Export duplicate handling, path validation, metadata persistence, and no-network/browser/auto-submit boundaries approved |
 | 2026-06-04 | Plan 003 | pattern-detector | approved | Decision/solution patterns aligned with SQLite canonical state and generated exports |
+| 2026-06-04 | Plan 004 | validator | approved | Focused tests `10 passed`, full tests `68 passed`, Ruff/build passed; Chrome unavailable |
+| 2026-06-04 | Plan 004 | reviewer | request changes | Registry `filters` drift and wrapper invocation coverage gap found and fixed |
+| 2026-06-04 | Plan 004 | security | approved | Closed runner dispatch, escaped web output, fixed wrapper paths, and no secret findings |
+| 2026-06-04 | Plan 004 | accessibility-auditor | issues found | Error page landmark and repeated evaluation label findings fixed |
+| 2026-06-04 | Plan 004 | pattern-detector | request changes | Stale wrapper docs and overclaimed TUI/web/wrapper plan text fixed |
+| 2026-06-04 | Plans 003-004 | refactorer | changes made | Extracted shared dashboard read model for TUI/web while preserving core command boundaries |
 
 ## Durable Captures
 
-- Decisions: `.vault/decisions/foundational-architecture-2026-06-03.md`, `.vault/decisions/mvp-core-sqlite-source-of-truth-decision-2026-06-03.md`, `.vault/decisions/mvp-client-boundaries-decision-2026-06-03.md`, `.vault/decisions/mvp-no-autosubmit-default-decision-2026-06-03.md`, `.vault/decisions/sqlite-data-layer-2026-06-03.md`, `.vault/decisions/evaluation-strategy-2026-06-03.md`
-- Solutions: `.vault/solutions/bootstrap-core-contracts-solution-2026-06-04.md`, `.vault/solutions/sqlite-repository-pattern-2026-06-03.md`, `.vault/solutions/cited-evaluation-workflow-2026-06-03.md`
-- Encounters: none yet
+- Decisions: `.vault/decisions/foundational-architecture-2026-06-03.md`, `.vault/decisions/mvp-core-sqlite-source-of-truth-decision-2026-06-03.md`, `.vault/decisions/mvp-client-boundaries-decision-2026-06-03.md`, `.vault/decisions/mvp-no-autosubmit-default-decision-2026-06-03.md`, `.vault/decisions/sqlite-data-layer-2026-06-03.md`, `.vault/decisions/evaluation-strategy-2026-06-03.md`, `.vault/decisions/local-web-dashboard-stack-2026-06-03.md`
+- Solutions: `.vault/solutions/bootstrap-core-contracts-solution-2026-06-04.md`, `.vault/solutions/sqlite-repository-pattern-2026-06-03.md`, `.vault/solutions/cited-evaluation-workflow-2026-06-03.md`, `.vault/solutions/command-wrapper-generation-2026-06-03.md`
+- Encounters: `.vault/encounters/browser-verification-chrome-missing-2026-06-04.md`

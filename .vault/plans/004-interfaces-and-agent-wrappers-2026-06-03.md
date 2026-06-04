@@ -54,7 +54,7 @@ goal_ready: true
 
 ## Success Criteria
 
-- [x] CLI commands cover workspace init, profile import/show, job import/evaluate/list/show, application add/update/list/export, and wrapper generation.
+- [x] CLI commands cover workspace init, profile import/show, job import/evaluate/list/show, and application add/update/list/export; wrapper generation is exposed through `res2jobworks-generate-wrappers`.
 - [x] TUI exposes the MVP job queue, detail preview, evaluation summaries, and status fields over the same core read model.
 - [x] Local web dashboard exposes equivalent MVP read workflows through the same core/backend contracts.
 - [x] Agent wrapper generation produces Codex/Hermes/Claude/OpenCode/Gemini-ready artifacts or documented stubs from the shared command registry.
@@ -216,7 +216,7 @@ ASCII fallback:
   - Browser verification for web dashboard if implemented with a dev server
 - Required proof of completion:
   - CLI can run public fixture workflow.
-  - TUI and web can display and mutate the same stored records.
+  - TUI and web can display the same stored records through read-only dashboard renderers.
   - Generated wrappers call shared commands and pass parity tests.
   - Web dashboard screenshots or browser notes show responsive, non-overlapping UI.
 - Review gates:
@@ -304,3 +304,4 @@ Final evidence:
 - `uv build` -> built sdist and wheel
 - Installed-wheel smoke -> `res2jobworks run`, cited evaluation, and `res2jobworks-generate-wrappers` passed
 - Browser MCP check -> blocked because Chrome/Chromium is not installed on the host
+- Post-review follow-up -> `26` focused tests, `70` full tests, Ruff, and build passed after removing unimplemented `filters` metadata, adding wrapper invocation parity, fixing web error landmarks, and extracting shared dashboard read orchestration

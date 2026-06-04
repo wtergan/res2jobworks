@@ -8,27 +8,34 @@ be served by any local HTTP wrapper without duplicating product behavior.
 from html import escape
 from pathlib import Path
 
-from res2jobworks_core.commands import list_jobs, show_job
+from apps.dashboard_read_model import DashboardJob, load_dashboard_jobs
 from res2jobworks_core.contracts import CommandEnvelope
 
 
 def render_dashboard_html(database_path: Path | str) -> str:
     """Render the local job dashboard as responsive, semantic HTML."""
-    jobs_envelope = list_jobs(database_path)
+    jobs_envelope, dashboard_jobs = load_dashboard_jobs(database_path)
     if not jobs_envelope.ok:
-        return _document(title="res2jobWorks", body=_error_region(jobs_envelope))
+        body = _page_shell(
+            """
+  <header class="masthead">
+    <p class="eyebrow" translate="no">res2jobWorks</p>
+    <h1>Dashboard unavailable</h1>
+  </header>
+"""
+            + _error_region(jobs_envelope),
+        )
+        return _document(title="res2jobWorks", body=body)
 
-    jobs = jobs_envelope.data["jobs"]
+    jobs = [dashboard_job.summary for dashboard_job in dashboard_jobs]
     rows = "\n".join(_job_row(job) for job in jobs)
-    details = "\n".join(_job_detail(database_path, job["id"]) for job in jobs)
+    details = "\n".join(_job_detail(dashboard_job) for dashboard_job in dashboard_jobs)
     empty_state = (
         '<p class="empty">No jobs imported yet.</p>'
         if not jobs
         else ""
     )
-    body = f"""
-<a class="skip-link" href="#main">Skip to main content</a>
-<main id="main" class="shell">
+    body = _page_shell(f"""
   <header class="masthead">
     <p class="eyebrow" translate="no">res2jobWorks</p>
     <h1>Evaluation Tracker</h1>
@@ -59,9 +66,17 @@ def render_dashboard_html(database_path: Path | str) -> str:
     <h2 id="details-heading">Evidence</h2>
     {details}
   </section>
+""")
+    return _document(title="res2jobWorks Evaluation Tracker", body=body)
+
+
+def _page_shell(content: str) -> str:
+    return f"""
+<a class="skip-link" href="#main">Skip to main content</a>
+<main id="main" class="shell">
+{content}
 </main>
 """
-    return _document(title="res2jobWorks Evaluation Tracker", body=body)
 
 
 def _job_row(job: dict) -> str:
@@ -77,8 +92,8 @@ def _job_row(job: dict) -> str:
 """
 
 
-def _job_detail(database_path: Path | str, job_id: str) -> str:
-    detail = show_job(database_path, job_id=job_id)
+def _job_detail(dashboard_job: DashboardJob) -> str:
+    detail = dashboard_job.detail
     if not detail.ok:
         return _error_region(detail)
     job = detail.data["job"]
@@ -102,7 +117,7 @@ def _evaluation_block(evaluation: dict) -> str:
         _citation_line(citation) for citation in evaluation["citations"]
     )
     return f"""
-<section class="evaluation" aria-label="Evaluation summary">
+<section class="evaluation">
   <div class="score">
     <span>Score</span>
     <strong>{_score(evaluation["score"])}</strong>
