@@ -22,7 +22,7 @@
 
 | Task ID | Plan | Task | State | Depends On | Owner/Lane | Validation |
 |---|---|---|---|---|---|---|
-| M2.T1 | `.vault/plans/002-sqlite-evaluation-tracking-model-2026-06-03.md` | Build SQLite schema, migrations, and repositories | ready | M1.T1 | implementer | `pytest -q tests/db`, `pytest -q` |
+| M2.T1 | `.vault/plans/002-sqlite-evaluation-tracking-model-2026-06-03.md` | Build SQLite schema, migrations, and repositories | complete | M1.T1 | implementer | `pytest -q tests/db`, `pytest -q` |
 
 ### M3: MVP Workflows
 
@@ -33,7 +33,7 @@
 
 | Task ID | Plan | Task | State | Depends On | Owner/Lane | Validation |
 |---|---|---|---|---|---|---|
-| M3.T1 | `.vault/plans/003-import-evaluate-export-workflows-2026-06-03.md` | Build import/evaluate/export workflows | planned | M2.T1 | implementer | `pytest -q tests/workflows`, `pytest -q` |
+| M3.T1 | `.vault/plans/003-import-evaluate-export-workflows-2026-06-03.md` | Build import/evaluate/export workflows | ready_next | M2.T1 | implementer | `pytest -q tests/workflows`, `pytest -q` |
 
 ### M4: Interfaces
 

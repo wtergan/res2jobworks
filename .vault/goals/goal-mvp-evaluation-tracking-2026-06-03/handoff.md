@@ -3,34 +3,48 @@
 ## Resume Here
 
 - Active goal run: `.vault/goals/goal-mvp-evaluation-tracking-2026-06-03/`
-- Current milestone/task: `M1.T1`
-- Current branch/worktree: main branch in `/home/gilgames/Code/res2jobworks`, no implementation branch yet
-- Read first:
-  - `.vault/goals/goal-mvp-evaluation-tracking-2026-06-03/progress.md`
-  - `.vault/goals/goal-mvp-evaluation-tracking-2026-06-03/task-graph.md`
-  - `.vault/PLAN.md`
-  - `.vault/plans/001-bootstrap-core-contracts-2026-06-03.md`
-  - `.vault/research/project-context-2026-06-03.md`
-  - `.vault/decisions/foundational-architecture-2026-06-03.md`
+- Current milestone/task: `M2.T1`
+- Current branch/worktree: `main` in `/home/gilgames/Code/res2jobworks`
+- Active plan: `.vault/plans/002-sqlite-evaluation-tracking-model-2026-06-03.md`
+- GitHub repo: `https://github.com/wtergan/res2jobworks`
 
 ## Latest Known State
 
-The repo is a planning workspace for a public-generic, local-first job-search
-workbench. Implementation has not started. The first implementation action is
-plan 001: bootstrap the Python-first monorepo, command envelope, config defaults,
-starter command registry, public fixtures, docs, and behavior-first tests.
+Plan 001 is complete, committed, and published. Plan 002 SQLite persistence is implemented and verifier-approved; it is ready to commit and publish.
 
-Plans 002-004 form MVP 1: SQLite persistence, import/evaluate/export workflows,
-and CLI/TUI/web/agent wrapper interfaces. Plan 005 is safe browser automation
-with human review. Plan 006 is deferred phase 2 tailoring and document generation.
+Implemented plan 002 scope:
 
-## Open Risks
+- Package-contained SQL migration and migration runner for the canonical SQLite workspace.
+- Explicit `SQLiteRepository` APIs for profiles, resume sources, jobs, job sources, evaluations, citations, applications, status events, notes, exports, and agent runs.
+- Citation ownership validation for evaluation profile/job, application/evaluation job consistency, parent-record validation with `RepositoryError`, bounded status values, append-only status history, export path validation, and recursive secret redaction.
+- Public fixture seed helper exported from the root package and verified from an installed wheel.
+- SQLite data-layer ADR and reusable repository-pattern solution note.
 
-- MVP scope could expand into tailoring before evaluation/tracking is stable.
-- Public fixtures could accidentally include private dogfooding data.
-- Clients/wrappers could drift from core behavior.
-- LLM-backed evaluation could become opaque without citations and versioned rubrics.
+## Validation Evidence
+
+- `uv run --extra dev pytest -q tests/db` -> `29 passed`
+- `uv run --extra dev pytest -q` -> `43 passed`
+- `uv run --extra dev ruff check .` -> pass
+- `uv build` -> built sdist and wheel
+- Fresh wheel install from `/tmp` -> packaged fixtures and migration loaded, valid status insert worked, camelCase access-token/client-secret metadata redacted while token usage counts remained intact, and Windows absolute export paths were rejected
+- Source checkout seed from `/tmp` -> sample workspace created without cwd-relative fixture access
+
+## Review State
+
+Verifier agents approved the final plan 002 diff after status enums, source fallback, camelCase redaction, and Windows export-path fixes.
+
+- validator: `APPROVED`
+- reviewer: `APPROVED`
+- security: `APPROVED`
+- pattern-detector: `APPROVED`
 
 ## Next Action
 
-Run `$act .vault/plans/001-bootstrap-core-contracts-2026-06-03.md` or paste the native `/goal` contract from `goal.md` to start the long-running MVP implementation loop.
+1. Commit plan 002 atomically with subject `FEAT: add sqlite persistence model`.
+2. Publish `main` to `wtergan/res2jobworks` using the `git-push` skill/API fast-forward path if direct push hooks block.
+3. Spawn the required refactorer gate because two feature-plan implementations are complete.
+4. Start plan 003 after refactorer findings are handled and committed.
+
+## Stop Conditions
+
+- Do not expand into import/evaluate/export workflows before plan 002 is committed and the refactorer gate after two implementations is complete.

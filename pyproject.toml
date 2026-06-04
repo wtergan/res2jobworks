@@ -24,6 +24,9 @@ packages = ["packages/core/src/res2jobworks_core"]
 
 [tool.hatch.build.targets.wheel.force-include]
 "commands/registry.yaml" = "packages/core/src/res2jobworks_core/registry.yaml"
+"packages/core/src/res2jobworks_core/db/migrations/001_initial.sql" = "res2jobworks_core/db/migrations/001_initial.sql"
+"templates/profile-example.yaml" = "res2jobworks_core/fixtures/profile-example.yaml"
+"examples/jobs/sample-job.md" = "res2jobworks_core/fixtures/sample-job.md"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

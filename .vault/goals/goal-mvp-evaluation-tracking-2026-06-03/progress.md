@@ -5,8 +5,8 @@
 - Phase: implementation
 - Current milestone: M2
 - Current task: M2.T1
-- Last action: 2026-06-04 - Completed plan 001 bootstrap scaffold after validation, review, security, and pattern gates.
-- Next action: Commit/push plan 001, then begin `.vault/plans/002-sqlite-evaluation-tracking-model-2026-06-03.md`.
+- Last action: 2026-06-04 - Plan 002 verifier gates approved after local/package validation.
+- Next action: Commit/push plan 002, then run the refactorer gate after two completed feature-plan implementations.
 
 ## Execution Ledger
 
@@ -14,6 +14,8 @@
 - 2026-06-03 - Planner-agent review integrated: added predecessor research, focused source-of-truth/client/no-submit ADRs, and split guidance for large follow-on plans.
 - 2026-06-04 - Created GitHub repo `wtergan/res2jobworks`, pushed the planning baseline, and implemented plan 001 bootstrap files in the main checkout.
 - 2026-06-04 - Fixed plan 001 review findings: packaged registry loading, no implicit cwd registry fallback, recursive fixture privacy validation, `.res2jobworks/` ignore coverage, public README path disclosure, and one-behavior-per-file tests.
+- 2026-06-04 - Implemented plan 002 SQLite migration/repository/seed layer with stdlib `sqlite3`, explicit SQL migrations, append-only status events, and fixture-backed sample workspace creation.
+- 2026-06-04 - Fixed plan 002 review findings for citation ownership, application/evaluation job consistency, parent-record errors, status enums, secret redaction boundaries, packaged seed fixture loading, string database paths, list APIs, seed privacy validation, and export path validation.
 
 ## Validation Evidence
 
@@ -24,6 +26,12 @@
 | 2026-06-04 | Plan 001 local gate | `uv run --extra dev ruff check .` | pass | `All checks passed!` |
 | 2026-06-04 | Plan 001 local gate | `uv run python -m res2jobworks_core` | pass | `res2jobworks-core ok workspace=.res2jobworks` |
 | 2026-06-04 | Plan 001 package gate | Fresh wheel install from `/tmp` | pass | `load_command_registry().by_id('jobs.evaluate')` returned `jobs.evaluate` |
+| 2026-06-04 | Plan 002 local gate | `uv run --extra dev pytest -q tests/db` | pass | `29 passed` |
+| 2026-06-04 | Plan 002 local gate | `uv run --extra dev pytest -q` | pass | `43 passed` |
+| 2026-06-04 | Plan 002 local gate | `uv run --extra dev ruff check .` | pass | `All checks passed!` |
+| 2026-06-04 | Plan 002 package gate | `uv build` | pass | Built `dist/res2jobworks-0.1.0.tar.gz` and `dist/res2jobworks-0.1.0-py3-none-any.whl` |
+| 2026-06-04 | Plan 002 package gate | Fresh wheel install from `/tmp` | pass | Packaged seed fixtures and migration loaded; valid status insert worked; camelCase access token/client secret metadata redacted while usage counts remained intact; Windows absolute export path rejected |
+| 2026-06-04 | Plan 002 source fallback gate | Source checkout seed from `/tmp` | pass | `seed_public_sample_workspace` created a sample DB without cwd-relative fixture access |
 
 ## Review Ledger
 
@@ -34,9 +42,13 @@
 | 2026-06-04 | Plan 001 | reviewer | approved | Packaged registry blocker fixed; remaining test organization note addressed before commit |
 | 2026-06-04 | Plan 001 | security | approved | README disclosure fixed; no live secrets/private fixture data found |
 | 2026-06-04 | Plan 001 | pattern-detector | approved | Matches foundational architecture and shared-registry patterns |
+| 2026-06-04 | Plan 002 | validator | approved | `29` DB tests, `43` full tests, Ruff/build/wheel/source fallback smoke passed |
+| 2026-06-04 | Plan 002 | reviewer | approved | Citation ownership, job consistency, status enums, source fallback, redaction, and Windows path regressions covered |
+| 2026-06-04 | Plan 002 | security | approved | CamelCase secrets redacted, usage counters preserved, Windows absolute paths rejected, packaged seed privacy checks passed |
+| 2026-06-04 | Plan 002 | pattern-detector | approved | Seed fallback now matches packaged-first/source-checkout repository pattern |
 
 ## Durable Captures
 
-- Decisions: `.vault/decisions/foundational-architecture-2026-06-03.md`, `.vault/decisions/mvp-core-sqlite-source-of-truth-decision-2026-06-03.md`, `.vault/decisions/mvp-client-boundaries-decision-2026-06-03.md`, `.vault/decisions/mvp-no-autosubmit-default-decision-2026-06-03.md`
-- Solutions: `.vault/solutions/bootstrap-core-contracts-solution-2026-06-04.md`
+- Decisions: `.vault/decisions/foundational-architecture-2026-06-03.md`, `.vault/decisions/mvp-core-sqlite-source-of-truth-decision-2026-06-03.md`, `.vault/decisions/mvp-client-boundaries-decision-2026-06-03.md`, `.vault/decisions/mvp-no-autosubmit-default-decision-2026-06-03.md`, `.vault/decisions/sqlite-data-layer-2026-06-03.md`
+- Solutions: `.vault/solutions/bootstrap-core-contracts-solution-2026-06-04.md`, `.vault/solutions/sqlite-repository-pattern-2026-06-03.md`
 - Encounters: none yet

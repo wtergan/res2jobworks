@@ -1,5 +1,5 @@
 ---
-status: Planned
+status: Complete
 priority: High
 date: 2026-06-03
 worktree_required: yes
@@ -41,9 +41,9 @@ goal_ready: true
   - [x] `.vault/research/project-context-2026-06-03.md`
 - Decisions:
   - [x] `.vault/decisions/foundational-architecture-2026-06-03.md`
-  - [ ] `.vault/decisions/sqlite-data-layer-2026-06-03.md`
+  - [x] `.vault/decisions/sqlite-data-layer-2026-06-03.md`
 - Solutions:
-  - [ ] `.vault/solutions/sqlite-repository-pattern-2026-06-03.md`
+  - [x] `.vault/solutions/sqlite-repository-pattern-2026-06-03.md`
 - Encounters:
   - [ ] `.vault/encounters/sqlite-migration-encounter-2026-06-03.md`
 - Visual companion:
@@ -53,12 +53,12 @@ goal_ready: true
 
 ## Success Criteria
 
-- [ ] A migration system initializes and upgrades a local SQLite workspace deterministically.
-- [ ] Schema covers profiles, resume sources, jobs, job sources, evaluations, evaluation citations, applications, application status events, notes, exports, and agent runs.
-- [ ] Repository/service APIs enforce explicit validation and do not silently coerce invalid records into success.
-- [ ] Status changes are append-only events, not destructive overwrites.
-- [ ] Tests prove create/read/update/list behavior and referential integrity for core records.
-- [ ] A sample local database can be created from public fixtures without private data.
+- [x] A migration system initializes and upgrades a local SQLite workspace deterministically.
+- [x] Schema covers profiles, resume sources, jobs, job sources, evaluations, evaluation citations, applications, application status events, notes, exports, and agent runs.
+- [x] Repository/service APIs enforce explicit validation and do not silently coerce invalid records into success.
+- [x] Status changes are append-only events, not destructive overwrites.
+- [x] Tests prove create/read/update/list behavior and referential integrity for core records.
+- [x] A sample local database can be created from public fixtures without private data.
 
 ## Architecture Diagram
 
@@ -112,7 +112,7 @@ agent_runs -> evaluations/applications
 
 ## Execution Steps
 
-- [ ] Step 1: Choose and record DB layer
+- [x] Step 1: Choose and record DB layer
   - ACTION: Decide SQLAlchemy vs SQLModel and migration tooling.
   - IMPLEMENT: Prefer explicit, boring, migration-friendly APIs; record the choice in `.vault/decisions/sqlite-data-layer-2026-06-03.md`.
   - FILES: `pyproject.toml`, `.vault/decisions/sqlite-data-layer-2026-06-03.md`
@@ -120,15 +120,15 @@ agent_runs -> evaluations/applications
   - GOTCHA: Avoid an ORM layer that hides migrations or makes schema hard to inspect.
   - VALIDATE: Dependency and import smoke test.
 
-- [ ] Step 2: Define schema and migrations
+- [x] Step 2: Define schema and migrations
   - ACTION: Add migrations for MVP 1 tables.
-  - IMPLEMENT: Include primary keys, foreign keys, timestamps, status enums, rubric/evaluation versions, source references, and export metadata.
+  - IMPLEMENT: Include primary keys, foreign keys, timestamps, bounded status values, rubric/evaluation versions, source references, and export metadata.
   - FILES: `packages/core/src/res2jobworks_core/db/`, `packages/core/migrations/`
   - MIRROR: Data model defaults in the Vault plan note.
   - GOTCHA: Status history should be append-only; do not overwrite historical status events.
   - VALIDATE: Migration create/upgrade test.
 
-- [ ] Step 3: Add repository and unit-of-work contracts
+- [x] Step 3: Add repository and unit-of-work contracts
   - ACTION: Create persistence APIs for core aggregates.
   - IMPLEMENT: Keep repository methods explicit and return typed results/errors through core contracts.
   - FILES: `packages/core/src/res2jobworks_core/repositories/`
@@ -136,7 +136,7 @@ agent_runs -> evaluations/applications
   - GOTCHA: Do not leak ORM internals into client contracts.
   - VALIDATE: Focused repository tests.
 
-- [ ] Step 4: Add fixture-backed seed path
+- [x] Step 4: Add fixture-backed seed path
   - ACTION: Let public fixtures initialize a sample workspace database.
   - IMPLEMENT: Use deterministic IDs or stable lookup keys where tests need repeatability.
   - FILES: `packages/core/src/res2jobworks_core/seed.py`, `tests/fixtures/`
@@ -144,7 +144,7 @@ agent_runs -> evaluations/applications
   - GOTCHA: Seed data must remain public-generic.
   - VALIDATE: Fixture seed test.
 
-- [ ] Step 5: Connect registry metadata to persistence readiness
+- [x] Step 5: Connect registry metadata to persistence readiness
   - ACTION: Mark database-backed commands as planned/available according to implemented persistence.
   - IMPLEMENT: Avoid claiming workflow commands are complete before plan 003.
   - FILES: `commands/registry.yaml`, generated docs if present
@@ -154,17 +154,17 @@ agent_runs -> evaluations/applications
 
 ## Code Documentation Contract
 
-- [ ] Schema modules include purpose and migration invariants.
-- [ ] Repository public methods document side effects and failure modes where signatures are not enough.
-- [ ] Comments explain relational constraints, status history, and citation invariants.
+- [x] Schema modules include purpose and migration invariants.
+- [x] Repository public methods document side effects and failure modes where signatures are not enough.
+- [x] Comments explain relational constraints, status history, and citation invariants.
 
 ## Testing Strategy (TDD)
 
 ### TDD Contract
 
-- [ ] Red: write failing tests for migration, schema, and repository behavior before implementation where practical
-- [ ] Green: implement minimal persistence behavior
-- [ ] Refactor: improve structure while keeping tests green
+- [x] Red: write failing tests for migration, schema, and repository behavior before implementation where practical
+- [x] Green: implement minimal persistence behavior
+- [x] Refactor: improve structure while keeping tests green
 
 ### Test File Plan
 
@@ -202,7 +202,7 @@ agent_runs -> evaluations/applications
   - `M2.T1` Build SQLite source of truth
 - Dependencies:
   - `M2.T1` depends on `M1.T1`
-- Current state: planned
+- Current state: complete
 - Handoff source: `.vault/goals/goal-mvp-evaluation-tracking-2026-06-03/handoff.md`
 
 ## Verification Contract
@@ -278,10 +278,11 @@ Final evidence:
 
 ## Open Questions
 
-- [ ] SQLAlchemy or SQLModel?
-- [ ] Alembic-style migrations or a lighter explicit migration runner?
-- [ ] Should evaluation citations require exact text spans in MVP 1, or allow source-level citations first?
+- [x] SQLAlchemy or SQLModel? Resolved: use stdlib `sqlite3` with explicit repository APIs for MVP 1.
+- [x] Alembic-style migrations or a lighter explicit migration runner? Resolved: use package-contained SQL files and a small migration runner.
+- [x] Should evaluation citations require exact text spans in MVP 1, or allow source-level citations first? Resolved: require a quote and source record; offset spans remain optional for MVP 1.
 
 ## Progress Log
 
 - 2026-06-03: Plan created from roadmap and foundational ADR.
+- 2026-06-04: Implemented stdlib `sqlite3` data layer with package-contained SQL migration, explicit repository APIs, public fixture seeding, SQLite data-layer ADR, reusable repository pattern note, and behavior-first DB tests. Final local verification passed with `uv run --extra dev pytest -q tests/db` (`29 passed`), `uv run --extra dev pytest -q` (`43 passed`), `uv run --extra dev ruff check .` (`All checks passed!`), `uv build`, a fresh installed-wheel seed/migration/status/redaction/path smoke from `/tmp`, and a source-checkout seed fallback probe from `/tmp`. Registry command statuses remain `planned` because plan 002 implements persistence primitives, not workflow command handlers. Review findings for citation ownership, application/evaluation job consistency, parent-record errors, status enums, agent/provider/export secret redaction including camelCase keys, packaged and source-checkout seed fixture loading, string database paths, list APIs, seed fixture validation, and POSIX/Windows export path validation were fixed.
