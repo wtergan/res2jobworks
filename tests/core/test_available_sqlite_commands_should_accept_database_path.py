@@ -15,6 +15,10 @@ def test_available_sqlite_commands_should_accept_database_path() -> None:
         "applications.list",
         "applications.export",
         "automation.capture_job",
+        "documents.suggest_tailoring",
+        "documents.draft_cover_letter",
+        "documents.draft_application_answer",
+        "documents.render_cover_letter",
     }
 
     for command_id in sqlite_command_ids:

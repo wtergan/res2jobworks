@@ -11,9 +11,9 @@ def test_empty_workspace_should_apply_all_migrations(tmp_path) -> None:
     version = apply_migrations(database_path)
     second_version = apply_migrations(database_path)
 
-    assert version == 1
-    assert second_version == 1
-    assert current_version(database_path) == 1
+    assert version == 2
+    assert second_version == 2
+    assert current_version(database_path) == 2
     assert {
         "schema_migrations",
         "profiles",

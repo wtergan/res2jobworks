@@ -66,7 +66,7 @@
 
 | Task ID | Plan | Task | State | Depends On | Owner/Lane | Validation |
 |---|---|---|---|---|---|---|
-| M6.T1 | `.vault/plans/006-tailoring-documents-phase2-2026-06-03.md` | Implement phase 2 documents | planned | M3.T1, M4.T1 | implementer/security | `pytest -q tests/documents` |
+| M6.T1 | `.vault/plans/006-tailoring-documents-phase2-2026-06-03.md` | Implement phase 2 documents | complete | M3.T1, M4.T1, M5.T1 | implementer/security | `pytest -q tests/documents` |
 
 ## State Values
 

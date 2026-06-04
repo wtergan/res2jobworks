@@ -28,12 +28,14 @@ packages = [
     "apps",
     "packages/automation/src/res2jobworks_automation",
     "packages/core/src/res2jobworks_core",
+    "packages/documents/src/res2jobworks_documents",
     "packages/skills/src/res2jobworks_skills",
 ]
 
 [tool.hatch.build.targets.wheel.force-include]
 "commands/registry.yaml" = "packages/core/src/res2jobworks_core/registry.yaml"
 "packages/core/src/res2jobworks_core/db/migrations/001_initial.sql" = "res2jobworks_core/db/migrations/001_initial.sql"
+"packages/core/src/res2jobworks_core/db/migrations/002_document_export_formats.sql" = "res2jobworks_core/db/migrations/002_document_export_formats.sql"
 "templates/profile-example.yaml" = "res2jobworks_core/fixtures/profile-example.yaml"
 "examples/jobs/sample-job.md" = "res2jobworks_core/fixtures/sample-job.md"
 
@@ -42,6 +44,7 @@ testpaths = ["tests"]
 pythonpath = [
     "packages/automation/src",
     "packages/core/src",
+    "packages/documents/src",
     "packages/skills/src",
     ".",
 ]
@@ -53,6 +56,7 @@ src = [
     "apps",
     "packages/automation/src",
     "packages/core/src",
+    "packages/documents/src",
     "packages/skills/src",
     "tests",
 ]

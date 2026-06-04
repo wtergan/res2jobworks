@@ -2,11 +2,11 @@
 
 ## Current Status
 
-- Phase: publishing
-- Current milestone: M5
-- Current task: M5.T1
-- Last action: 2026-06-04 - Plan 005 passed validator, reviewer, security, accessibility, and pattern gates after hardening fixes.
-- Next action: Commit and publish the browser automation feature.
+- Phase: implementation
+- Current milestone: M6
+- Current task: M6.T1
+- Last action: 2026-06-04 - Plan 006 reviewer/security re-review approved after skill-boundary, artifact finalization, and command parity fixes.
+- Next action: Commit and publish Plan 006, then run the required post-Plans 005-006 refactorer gate.
 
 ## Execution Ledger
 
@@ -23,6 +23,9 @@
 - 2026-06-04 - Ran the required post-plan-004 refactorer gate; extracted shared dashboard read orchestration and fixed reviewer/accessibility contract drift.
 - 2026-06-04 - Implemented plan 005 browser automation with browser-free capture contracts, core `jobs.import` integration, persisted sanitized job-source evidence metadata, CLI/agent registry commands, no-submit fill-review, UI evidence labels, and browser evidence solution capture.
 - 2026-06-04 - Completed Plan 005 review hardening: unified command identity, redacted sensitive URL parts, validated evidence paths, rejected credential-like fill fields, stripped terminal control sequences, and removed stale handoff/cache artifacts.
+- 2026-06-04 - Implemented Plan 006 evidence-backed tailoring and document generation with deterministic drafts, readiness checks, Markdown/DOCX/PDF artifacts, document command runners, and migration 002 for document export metadata.
+- 2026-06-04 - Fixed Plan 006 re-review blockers: provider metadata matches no longer become supported claims without profile/citation evidence, document rendering cleans up temporary artifacts if export metadata recording fails, and application-answer drafts are exposed through the shared registry and CLI.
+- 2026-06-04 - Fixed Plan 006 reviewer follow-up by replacing provider skill substring checks with normalized term/phrase boundary matching and adding the one-letter skill regression.
 
 ## Validation Evidence
 
@@ -63,6 +66,15 @@
 | 2026-06-04 | Plan 005 security/accessibility hardening | `uv run --extra dev ruff check .` | pass | `All checks passed!` |
 | 2026-06-04 | Plan 005 security/accessibility hardening | `uv build` | pass | Built sdist and wheel after hardening |
 | 2026-06-04 | Plan 005 hardened command smoke | `automation.capture_job` and `automation.prepare_fill_review` | pass | Capture stripped sensitive URL query/fragment material; fill-review blocked `password` without echoing the secret value |
+| 2026-06-04 | Plan 006 local gate | `uv run --extra dev pytest -q tests/documents` | pass | `8 passed` |
+| 2026-06-04 | Plan 006 local gate | `uv run --extra dev pytest -q` | pass | `93 passed` |
+| 2026-06-04 | Plan 006 local gate | `uv run --extra dev ruff check .` | pass | `All checks passed!` |
+| 2026-06-04 | Plan 006 package gate | `uv build` | pass | Built sdist and wheel |
+| 2026-06-04 | Plan 006 command smoke | `documents.draft_cover_letter` and `documents.render_cover_letter` | pass | Unsupported `Kubernetes` label surfaced; PDF artifact written and export metadata recorded |
+| 2026-06-04 | Plan 006 re-review fixes | `uv run --extra dev pytest -q tests/documents tests/db/test_empty_workspace_should_apply_all_migrations.py tests/db/test_exports_should_reference_canonical_records.py tests/core/test_available_sqlite_commands_should_accept_database_path.py tests/core/test_registry_entries_should_have_required_metadata.py tests/wrappers/test_available_agent_commands_should_match_runner_inputs.py` | pass | `18 passed`; includes provider metadata hardening, skill-boundary matching, export cleanup, registry parity, migration/export checks |
+| 2026-06-04 | Plan 006 re-review fixes | `uv run --extra dev pytest -q` | pass | `97 passed` |
+| 2026-06-04 | Plan 006 re-review fixes | `uv run --extra dev ruff check .` | pass | `All checks passed!` |
+| 2026-06-04 | Plan 006 re-review fixes | `uv build` | pass | Built sdist and wheel after re-review fixes |
 
 ## Review Ledger
 
@@ -93,6 +105,12 @@
 | 2026-06-04 | Plan 005 | security | approved | URL/path/fill-field and terminal-control hardening resolved prior blockers |
 | 2026-06-04 | Plan 005 | accessibility-auditor | approved | Readable review labels and safe evidence rendering approved |
 | 2026-06-04 | Plan 005 | pattern-detector | approved | Registry/client pattern, no-submit boundary, and vault consistency approved |
+| 2026-06-04 | Plan 006 | validator | approved | Focused document suite, full tests, Ruff, build, and package contents check passed before re-review fixes |
+| 2026-06-04 | Plan 006 | pattern-detector | approved | Package/client boundaries aligned; noted application-answer command parity as package-only before reviewer fix |
+| 2026-06-04 | Plan 006 | security | request changes | Provider `matched_skills` could become claims without source verification; fixed with verified profile skills and regression test |
+| 2026-06-04 | Plan 006 | reviewer | request changes | Artifact finalization and application-answer command parity blockers fixed with temp/finalize flow and registry/CLI command |
+| 2026-06-04 | Plan 006 | security | approved | Re-review found no blocking security issues after provider metadata was separated from supported evidence claims |
+| 2026-06-04 | Plan 006 | reviewer | approved | Re-review found no blocking findings after normalized term/phrase skill matching and registry metadata coverage |
 
 ## Durable Captures
 

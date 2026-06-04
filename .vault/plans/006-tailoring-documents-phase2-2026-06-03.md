@@ -1,5 +1,5 @@
 ---
-status: Deferred
+status: Complete
 priority: Medium
 date: 2026-06-03
 worktree_required: yes
@@ -41,12 +41,12 @@ goal_ready: false
 
 - Research:
   - [x] `.vault/research/project-context-2026-06-03.md`
-  - [ ] `.vault/research/document-generation-options-2026-06-03.md`
+  - [x] `.vault/research/document-generation-options-2026-06-03.md`
 - Decisions:
   - [x] `.vault/decisions/foundational-architecture-2026-06-03.md`
-  - [ ] `.vault/decisions/document-rendering-stack-2026-06-03.md`
+  - [x] `.vault/decisions/document-rendering-stack-2026-06-03.md`
 - Solutions:
-  - [ ] `.vault/solutions/evidence-backed-tailoring-2026-06-03.md`
+  - [x] `.vault/solutions/evidence-backed-tailoring-2026-06-03.md`
 - Encounters:
   - [ ] `.vault/encounters/document-rendering-encounter-2026-06-03.md`
 - Visual companion:
@@ -56,12 +56,13 @@ goal_ready: false
 
 ## Success Criteria
 
-- [ ] Tailoring suggestions are generated from stored profile/resume sources, job sources, and evaluations.
-- [ ] Resume diffs are section-level, cited, reversible, and reviewable before rendering.
-- [ ] Cover letters and open-ended answers cite source materials or clearly label inferred suggestions.
-- [ ] Document rendering supports Markdown first, then PDF/DOCX through an explicit rendering stack.
-- [ ] ATS/readability checks are deterministic where practical and labeled where model-backed.
-- [ ] Tests prove generated drafts do not invent unsupported claims from fixture data.
+- [x] Tailoring suggestions are generated from stored profile/resume sources, job sources, and evaluations.
+- [x] Resume diffs are section-level, cited, reversible, and reviewable before rendering.
+- [x] Cover letters and open-ended answers cite source materials or clearly label inferred suggestions.
+- [x] Document rendering supports Markdown first, then PDF/DOCX through an explicit rendering stack.
+- [x] ATS/readability checks are deterministic where practical and labeled where model-backed.
+- [x] Tests prove generated drafts do not invent unsupported claims from fixture data.
+- [x] Provider-reported matches are not treated as supported claims unless they appear in stored profile/citation evidence.
 
 ## Architecture Diagram
 
@@ -109,7 +110,7 @@ SQLite evidence -> suggestions/drafts -> human review -> document renderer -> ge
 
 ## Execution Steps
 
-- [ ] Step 1: Research rendering and evidence options
+- [x] Step 1: Research rendering and evidence options
   - ACTION: Compare Markdown-first, HTML-to-PDF, DOCX, and LibreOffice-based rendering options.
   - IMPLEMENT: Prefer local, inspectable, testable renderers.
   - FILES: `.vault/research/document-generation-options-2026-06-03.md`
@@ -117,7 +118,7 @@ SQLite evidence -> suggestions/drafts -> human review -> document renderer -> ge
   - GOTCHA: Do not add heavyweight rendering stack before MVP 1 evidence is ready.
   - VALIDATE: Research note review.
 
-- [ ] Step 2: Define evidence-backed tailoring contracts
+- [x] Step 2: Define evidence-backed tailoring contracts
   - ACTION: Add models for suggestions, diffs, claims, source links, and review state.
   - IMPLEMENT: Every claim should link to stored profile/resume/job/evaluation evidence or be labeled as an inference.
   - FILES: `packages/documents/`, `packages/core/`, tests
@@ -125,7 +126,7 @@ SQLite evidence -> suggestions/drafts -> human review -> document renderer -> ge
   - GOTCHA: No unsupported claims.
   - VALIDATE: Unsupported-claim tests.
 
-- [ ] Step 3: Implement resume diffs and review workflow
+- [x] Step 3: Implement resume diffs and review workflow
   - ACTION: Generate section-level diffs for human review.
   - IMPLEMENT: Preserve originals, proposed changes, rationale, and citations.
   - FILES: `packages/documents/src/res2jobworks_documents/`
@@ -133,7 +134,7 @@ SQLite evidence -> suggestions/drafts -> human review -> document renderer -> ge
   - GOTCHA: Generated diffs must not overwrite canonical profile sources.
   - VALIDATE: Diff/review tests.
 
-- [ ] Step 4: Implement letter and answer drafts
+- [x] Step 4: Implement letter and answer drafts
   - ACTION: Generate cover letter and application answer drafts.
   - IMPLEMENT: Use evidence builder and clearly label weak support or missing evidence.
   - FILES: `packages/documents/`, `templates/documents/`
@@ -141,7 +142,7 @@ SQLite evidence -> suggestions/drafts -> human review -> document renderer -> ge
   - GOTCHA: Avoid false specificity.
   - VALIDATE: Draft provenance tests.
 
-- [ ] Step 5: Implement renderers
+- [x] Step 5: Implement renderers
   - ACTION: Add Markdown, PDF, and DOCX rendering after stack ADR.
   - IMPLEMENT: Record rendering metadata and source evidence.
   - FILES: `packages/documents/`, `.vault/decisions/document-rendering-stack-2026-06-03.md`
@@ -151,17 +152,17 @@ SQLite evidence -> suggestions/drafts -> human review -> document renderer -> ge
 
 ## Code Documentation Contract
 
-- [ ] Document modules explain provenance, review, and rendering boundaries.
-- [ ] Public drafting APIs document provider use, unsupported-claim handling, and side effects.
-- [ ] Renderer code documents artifact generation and canonical-state boundaries.
+- [x] Document modules explain provenance, review, and rendering boundaries.
+- [x] Public drafting APIs document provider use, unsupported-claim handling, and side effects.
+- [x] Renderer code documents artifact generation and canonical-state boundaries.
 
 ## Testing Strategy (TDD)
 
 ### TDD Contract
 
-- [ ] Red: write unsupported-claim and provenance tests before generation behavior
-- [ ] Green: implement minimal evidence-backed drafts
-- [ ] Refactor: improve document structure and rendering while tests stay green
+- [x] Red: write unsupported-claim and provenance tests before generation behavior
+- [x] Green: implement minimal evidence-backed drafts
+- [x] Refactor: improve document structure and rendering while tests stay green
 
 ### Test File Plan
 
@@ -197,7 +198,7 @@ SQLite evidence -> suggestions/drafts -> human review -> document renderer -> ge
   - `M6.T1` Plan phase 2 documents
 - Dependencies:
   - `M6.T1` depends on `M3.T1`, `M4.T1`, and preferably `M5.T1`
-- Current state: planned
+- Current state: complete
 - Handoff source: `.vault/goals/goal-mvp-evaluation-tracking-2026-06-03/handoff.md`
 
 ## Verification Contract
@@ -212,9 +213,32 @@ SQLite evidence -> suggestions/drafts -> human review -> document renderer -> ge
   - Rendering stack ADR exists.
   - Generated document artifacts trace back to canonical SQLite records.
 - Review gates:
-  - validator pass
-  - reviewer approve
-  - security pass for private data/provenance
+  - validator pass: complete
+  - pattern pass: complete
+  - reviewer approve: complete
+  - security pass for private data/provenance: complete
+
+## Review Remediation
+
+- Security finding fixed: `provider_metadata.dimensions.matched_skills` is now raw provider input only. Drafting uses `verified_profile_skills`, which must appear in stored resume/profile citation evidence, and labels unverified provider skills as `unsupported_inferences`.
+- Reviewer follow-up fixed: skill verification now requires normalized term or phrase boundaries, preventing arbitrary substring matches such as one-letter provider skills from becoming supported claims.
+- Reviewer finding fixed: document rendering writes a unique temporary artifact, records export metadata with a collision-resistant export id, removes the temporary file on metadata failure, and only finalizes the output path after metadata succeeds.
+- Reviewer finding fixed: `documents.draft_application_answer` is exposed through the package command wrapper, CLI registry dispatcher, and shared command registry.
+- Regression coverage added for provider metadata claim hardening, skill boundary matching, failed export metadata cleanup, and CLI registry application-answer parity.
+
+## Verification Evidence
+
+- `uv run --extra dev pytest -q tests/documents tests/db/test_empty_workspace_should_apply_all_migrations.py tests/db/test_exports_should_reference_canonical_records.py tests/core/test_available_sqlite_commands_should_accept_database_path.py tests/core/test_registry_entries_should_have_required_metadata.py tests/wrappers/test_available_agent_commands_should_match_runner_inputs.py` -> `18 passed`
+- `uv run --extra dev pytest -q` -> `97 passed`
+- `uv run --extra dev ruff check .` -> `All checks passed!`
+- `uv build` -> built `dist/res2jobworks-0.1.0.tar.gz` and `dist/res2jobworks-0.1.0-py3-none-any.whl`
+
+## Review Results
+
+- Validator: `APPROVED`
+- Pattern detector: `APPROVED`
+- Security: `APPROVED`; previous provider-metadata provenance blocker fixed.
+- Reviewer: `APPROVED`; previous renderer finalization, application-answer command parity, and skill-boundary blockers fixed.
 
 ## Goal Contract
 
@@ -281,3 +305,5 @@ Final evidence:
 ## Progress Log
 
 - 2026-06-03: Deferred phase 2 plan created to preserve scope boundary.
+- 2026-06-04: Implementation activated in worktree `res2jobworks-phase2-documents`; linked rendering research and stack ADR are present.
+- 2026-06-04: Implemented evidence loading, tailoring suggestions, reversible resume diffs, cover/application drafts, Markdown/DOCX/PDF artifact renderers, deterministic readiness checks, and document command envelopes. Verification: `uv run --extra dev pytest -q tests/documents` -> 8 passed; `uv run --extra dev pytest -q` -> 93 passed; `uv run --extra dev ruff check .` -> passed; `uv build` -> passed; CLI smoke rendered a PDF cover-letter artifact and recorded export metadata.

@@ -38,3 +38,33 @@ def test_exports_should_reference_canonical_records(tmp_path) -> None:
             target_id="missing",
             path="exports/missing.csv",
         )
+
+
+def test_document_exports_should_allow_pdf_and_docx_formats(tmp_path) -> None:
+    repository = SQLiteRepository(tmp_path / "workspace.sqlite3")
+    repository.create_job(
+        job_id="job-1",
+        employer="Example Cooperative",
+        title="Operations Analyst",
+        description="Fictional fixture job description",
+    )
+
+    pdf_export = repository.record_export(
+        export_id="export-pdf",
+        export_type="cover_letter_document",
+        format="pdf",
+        target_table="jobs",
+        target_id="job-1",
+        path="exports/cover-letter.pdf",
+    )
+    docx_export = repository.record_export(
+        export_id="export-docx",
+        export_type="cover_letter_document",
+        format="docx",
+        target_table="jobs",
+        target_id="job-1",
+        path="exports/cover-letter.docx",
+    )
+
+    assert pdf_export["format"] == "pdf"
+    assert docx_export["format"] == "docx"

@@ -6,5 +6,5 @@ def test_string_database_path_should_create_parent_directories(tmp_path) -> None
 
     version = apply_migrations(str(database_path))
 
-    assert version == 1
+    assert version == 2
     assert database_path.exists()

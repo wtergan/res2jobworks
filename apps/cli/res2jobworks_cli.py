@@ -29,6 +29,12 @@ from res2jobworks_core.commands import (
     update_application,
 )
 from res2jobworks_core.contracts import CommandEnvelope, CommandError
+from res2jobworks_documents import (
+    draft_application_answer,
+    draft_cover_letter,
+    render_cover_letter,
+    suggest_tailoring,
+)
 
 CommandHandler = Callable[[Mapping[str, str]], CommandEnvelope]
 
@@ -415,6 +421,48 @@ def _json_mapping_input(value: str) -> dict[str, str]:
     return {str(key): str(raw_value) for key, raw_value in parsed.items()}
 
 
+def _runner_documents_suggest_tailoring(inputs: Mapping[str, str]) -> CommandEnvelope:
+    return suggest_tailoring(
+        Path(_require_input(inputs, "database_path")),
+        profile_id=_require_input(inputs, "profile_id"),
+        job_id=_require_input(inputs, "job_id"),
+        evaluation_id=inputs.get("evaluation_id"),
+    )
+
+
+def _runner_documents_draft_cover_letter(inputs: Mapping[str, str]) -> CommandEnvelope:
+    return draft_cover_letter(
+        Path(_require_input(inputs, "database_path")),
+        profile_id=_require_input(inputs, "profile_id"),
+        job_id=_require_input(inputs, "job_id"),
+        evaluation_id=inputs.get("evaluation_id"),
+        requested_focus=_tuple_input(inputs.get("requested_focus")),
+    )
+
+
+def _runner_documents_draft_application_answer(
+    inputs: Mapping[str, str],
+) -> CommandEnvelope:
+    return draft_application_answer(
+        Path(_require_input(inputs, "database_path")),
+        profile_id=_require_input(inputs, "profile_id"),
+        job_id=_require_input(inputs, "job_id"),
+        question=_require_input(inputs, "question"),
+        evaluation_id=inputs.get("evaluation_id"),
+    )
+
+
+def _runner_documents_render_cover_letter(inputs: Mapping[str, str]) -> CommandEnvelope:
+    return render_cover_letter(
+        Path(_require_input(inputs, "database_path")),
+        profile_id=_require_input(inputs, "profile_id"),
+        job_id=_require_input(inputs, "job_id"),
+        output_path=Path(_require_input(inputs, "output_path")),
+        format=inputs.get("format", "markdown"),
+        evaluation_id=inputs.get("evaluation_id"),
+    )
+
+
 _RUNNERS: dict[str, CommandHandler] = {
     "workspace.init": _runner_workspace_init,
     "profile.import": _runner_profile_import,
@@ -429,6 +477,10 @@ _RUNNERS: dict[str, CommandHandler] = {
     "applications.export": _runner_application_export,
     "automation.capture_job": _runner_automation_capture_job,
     "automation.prepare_fill_review": _runner_automation_prepare_fill_review,
+    "documents.suggest_tailoring": _runner_documents_suggest_tailoring,
+    "documents.draft_cover_letter": _runner_documents_draft_cover_letter,
+    "documents.draft_application_answer": _runner_documents_draft_application_answer,
+    "documents.render_cover_letter": _runner_documents_render_cover_letter,
 }
 
 

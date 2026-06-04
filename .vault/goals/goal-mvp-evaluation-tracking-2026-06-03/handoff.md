@@ -3,14 +3,14 @@
 ## Resume Here
 
 - Active goal run: `.vault/goals/goal-mvp-evaluation-tracking-2026-06-03/`
-- Current milestone/task: `M5.T1`
-- Current branch/worktree: detached worktree at `/home/gilgames/Code/res2jobworks/.worktrees/res2jobworks-browser-automation`
-- Active plan: `.vault/plans/005-browser-automation-human-review-2026-06-03.md`
+- Current milestone/task: `M6.T1`
+- Current branch/worktree: detached worktree at `/home/gilgames/Code/res2jobworks/.worktrees/res2jobworks-phase2-documents`
+- Active plan: `.vault/plans/006-tailoring-documents-phase2-2026-06-03.md`
 - GitHub repo: `https://github.com/wtergan/res2jobworks`
 
 ## Latest Known State
 
-Plans 001, 002, 003, and 004 are complete, committed, and published. The required two-plan refactorer gates after plan 002 and plan 004 are also published. Plan 005 is complete locally in the `res2jobworks-browser-automation` worktree and is ready to commit and publish.
+Plans 001, 002, 003, 004, and 005 are complete, committed, and published. The required two-plan refactorer gates after plan 002 and plan 004 are also published. Plan 006 is complete locally in the `res2jobworks-phase2-documents` worktree; validator, pattern, security, and reviewer gates approved after requested fixes.
 
 Implemented plan 002 scope:
 
@@ -46,6 +46,18 @@ Implemented plan 005 scope:
 - Fill-review planning rejects credential-like field names, requires the human-review state, and returns `submission_allowed: false`.
 - TUI and web detail views surface captured evidence URL/readable review state; docs describe the no-submit, no-credentials, no-session boundary.
 
+Implemented plan 006 scope:
+
+- Evidence bundles load profile, resume source, job source, evaluation, and citation records from SQLite before drafting.
+- Tailoring suggestions, resume diffs, cover letters, and application-answer drafts carry source evidence and require human review.
+- Unsupported requested focus areas are labeled instead of converted into claims.
+- Deterministic readiness checks label ATS/readability signals as local deterministic checks.
+- Markdown, minimal DOCX, and minimal PDF renderers write generated artifacts and record export metadata without mutating canonical profile/job state.
+- Document commands are available through the shared registry and CLI `res2jobworks run` dispatcher.
+- Provider metadata matches are not trusted as supported document claims unless verified against stored profile/citation evidence; unverified provider skills are labeled as unsupported inferences.
+- Rendering uses a temporary artifact and only finalizes the requested output path after export metadata is recorded, cleaning up the temp file on metadata failure.
+- `documents.draft_application_answer` is available through the package command wrapper, CLI runner, and shared command registry.
+
 ## Validation Evidence
 
 - `uv run --extra dev pytest -q tests/db` -> `29 passed`
@@ -69,6 +81,15 @@ Implemented plan 005 scope:
 - Plan 005 -> Ruff passed
 - Plan 005 -> `uv build` built sdist and wheel
 - Plan 005 hardening -> `20` focused tests, `84` full tests, Ruff, build, sanitized URL smoke, and credential-field rejection smoke passed
+- Plan 006 -> `8` document tests passed
+- Plan 006 -> `93` full tests passed
+- Plan 006 -> Ruff passed
+- Plan 006 -> `uv build` built sdist and wheel
+- Plan 006 -> CLI smoke labeled unsupported `Kubernetes` and rendered a PDF artifact with export metadata
+- Plan 006 re-review fixes -> `17` focused tests passed
+- Plan 006 re-review fixes -> `96` full tests passed
+- Plan 006 re-review fixes -> Ruff passed
+- Plan 006 re-review fixes -> `uv build` built sdist and wheel
 
 ## Review State
 
@@ -81,6 +102,13 @@ Plan 003 verifier state:
 - security: `APPROVED`
 - pattern-detector: `APPROVED`
 
+Plan 006 verifier state:
+
+- validator: `APPROVED`
+- pattern-detector: `APPROVED`
+- security: `APPROVED`
+- reviewer: `APPROVED`
+
 - validator: `APPROVED`
 - reviewer: `APPROVED`
 - security: `APPROVED`
@@ -88,10 +116,10 @@ Plan 003 verifier state:
 
 ## Next Action
 
-1. Commit Plan 005 as one atomic `FEAT:` commit.
+1. Commit Plan 006 as one atomic `FEAT:` commit.
 2. Publish `main` to `wtergan/res2jobworks` using the established API fast-forward path if direct push remains blocked.
-3. Continue to the next plan only after confirming local and remote refs are aligned.
+3. Run the required post-Plans 005-006 refactorer gate.
 
 ## Stop Conditions
 
-- Do not add real-site browser automation, credential/session handling, auto-submit, or phase 2 document generation before Plan 005 review and security gates approve the safety boundary.
+- Do not use private dogfooding resume data, add provider-backed drafting, or add submit behavior before explicit user approval and security review.

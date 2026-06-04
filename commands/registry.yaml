@@ -220,6 +220,68 @@ commands:
     clients:
       - cli
       - agent
+  - id: documents.suggest_tailoring
+    description: Suggest evidence-backed resume tailoring changes for human review.
+    phase: phase2
+    status: available
+    inputs:
+      - database_path
+      - profile_id
+      - job_id
+      - evaluation_id
+    outputs:
+      - suggestions
+    clients:
+      - cli
+      - agent
+  - id: documents.draft_cover_letter
+    description: Draft a cited cover letter without rendering or submission.
+    phase: phase2
+    status: available
+    inputs:
+      - database_path
+      - profile_id
+      - job_id
+      - evaluation_id
+      - requested_focus
+    outputs:
+      - draft
+    clients:
+      - cli
+      - agent
+  - id: documents.draft_application_answer
+    description: Draft a cited open-ended application answer without submission.
+    phase: phase2
+    status: available
+    inputs:
+      - database_path
+      - profile_id
+      - job_id
+      - evaluation_id
+      - question
+    outputs:
+      - draft
+    clients:
+      - cli
+      - agent
+  - id: documents.render_cover_letter
+    description: Render a cover letter artifact and record export metadata.
+    phase: phase2
+    status: available
+    inputs:
+      - database_path
+      - profile_id
+      - job_id
+      - evaluation_id
+      - output_path
+      - format
+    outputs:
+      - draft
+      - export_record
+      - files
+    clients:
+      - cli
+      - agent
   - id: dashboard.tui
     description: Launch the local TUI dashboard client.
     phase: mvp1

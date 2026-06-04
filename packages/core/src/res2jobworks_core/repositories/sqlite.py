@@ -538,8 +538,8 @@ class SQLiteRepository:
             target_id=target_id,
             path=path,
         )
-        if format not in {"markdown", "csv", "json"}:
-            msg = "export format must be markdown, csv, or json"
+        if format not in {"markdown", "csv", "json", "pdf", "docx"}:
+            msg = "export format must be markdown, csv, json, pdf, or docx"
             raise RepositoryError(msg)
         _validate_artifact_path(path)
         self._require_target_exists(target_table, target_id)

@@ -26,6 +26,10 @@ def test_registry_entries_should_have_required_metadata() -> None:
         "applications.export",
         "automation.capture_job",
         "automation.prepare_fill_review",
+        "documents.suggest_tailoring",
+        "documents.draft_cover_letter",
+        "documents.draft_application_answer",
+        "documents.render_cover_letter",
     }
     assert all(
         command.status == "planned"

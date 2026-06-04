@@ -28,6 +28,11 @@ MIGRATIONS: tuple[Migration, ...] = (
         name="initial_evaluation_tracking_schema",
         resource="001_initial.sql",
     ),
+    Migration(
+        version=2,
+        name="document_export_formats",
+        resource="002_document_export_formats.sql",
+    ),
 )
 
 
