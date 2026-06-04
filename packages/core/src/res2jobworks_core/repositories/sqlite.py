@@ -6,33 +6,15 @@ preserve append-only status history.
 """
 
 import json
-import re
 import sqlite3
 from pathlib import Path, PureWindowsPath
 from typing import Any
 
+from res2jobworks_core._privacy import REDACTED as REDACTED
+from res2jobworks_core._privacy import redact_secrets as _redact_secrets
 from res2jobworks_core.db.connection import connect
 from res2jobworks_core.db.migrations import apply_migrations
 
-SECRET_KEYS = {
-    "api_key",
-    "apikey",
-    "authorization",
-    "client_secret",
-    "credential",
-    "credential_blob",
-    "cookie",
-    "id_token",
-    "password",
-    "refresh_token",
-    "secret",
-    "session",
-    "session_id",
-    "sessionid",
-    "token",
-    "access_token",
-}
-REDACTED = "[REDACTED]"
 APPLICATION_STATUSES = {
     "interested",
     "applied",
@@ -746,52 +728,6 @@ class SQLiteRepository:
 
 def _json(value: Any) -> str:
     return json.dumps(value, sort_keys=True)
-
-
-def _redact_secrets(value: Any) -> Any:
-    if isinstance(value, dict):
-        redacted: dict[str, Any] = {}
-        for key, nested in value.items():
-            if _is_secret_key(str(key)):
-                redacted[key] = REDACTED
-            else:
-                redacted[key] = _redact_secrets(nested)
-        return redacted
-    if isinstance(value, list):
-        return [_redact_secrets(item) for item in value]
-    return value
-
-
-def _is_secret_key(key: str) -> bool:
-    normalized = _normalize_key(key)
-    if normalized in SECRET_KEYS:
-        return True
-    if normalized.startswith(("credential_", "session_")):
-        return True
-    if "credential" in normalized:
-        return True
-    return normalized.endswith(
-        (
-            "_access_token",
-            "_api_key",
-            "_client_secret",
-            "_cookie",
-            "_credential",
-            "_id_token",
-            "_password",
-            "_refresh_token",
-            "_secret",
-            "_session",
-            "_session_id",
-            "_sessionid",
-            "_token",
-        )
-    )
-
-
-def _normalize_key(key: str) -> str:
-    separated = key.replace("-", "_").replace(" ", "_")
-    return re.sub(r"(?<=[a-z0-9])(?=[A-Z])", "_", separated).lower()
 
 
 def _validate_artifact_path(path: str) -> None:
