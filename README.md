@@ -1,12 +1,22 @@
 # res2jobWorks
 
-`res2jobWorks` is a planned public-generic, local-first job-search workbench.
+`res2jobWorks` is a public-generic, local-first job-search workbench.
 
 The project supersedes the earlier `Res2JobFit` idea. Its first product goal is evaluation and tracking: help users decide which jobs deserve attention, explain why with evidence, and keep the application pipeline clean across CLI, TUI, browser UI, and agent workflows.
 
 ## Current Status
 
-This repository is a planning workspace. Implementation scaffolding has not started yet.
+Bootstrap implementation has started. The repo now has a Python-first monorepo
+scaffold, a core package with shared command contracts, public fixtures, a
+starter command registry, and behavior-first tests.
+
+Run the current bootstrap checks with:
+
+```bash
+uv run --extra dev pytest -q
+uv run --extra dev ruff check .
+uv run python -m res2jobworks_core
+```
 
 ## Locked Direction
 
@@ -35,10 +45,12 @@ public setup
 
 ## Planning References
 
-- Vault strategy note: `/home/gilgames/Vault/01_Projects/res2jobworks/res2jobworks.md`
-- Vault plan note: `/home/gilgames/Vault/02_Areas/Career/Res2JobWorks-Plan.md`
+- Feature plans: `.vault/plans/`
+- Architecture decisions: `.vault/decisions/`
+- Public fixture policy: `docs/fixtures.md`
 - Repo planning index: `.vault/PLAN.md`
 
 ## Next Step
 
-Write the first feature plan under `.vault/plans/` for MVP 1: evaluation and tracking.
+Implement the SQLite evaluation/tracking model in
+`.vault/plans/002-sqlite-evaluation-tracking-model-2026-06-03.md`.

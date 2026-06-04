@@ -1,0 +1,23 @@
+fixture: true
+kind: fictional_profile
+name: Jordan Avery
+headline: Product operations generalist for local-first civic software
+summary: >
+  Fictional example profile used to validate res2jobWorks import and evaluation
+  contracts without relying on private personal data.
+skills:
+  - product operations
+  - workflow analysis
+  - markdown documentation
+  - lightweight SQL inspection
+  - stakeholder communication
+experience:
+  - organization: Northstar Civic Tools
+    role: Operations Coordinator
+    summary: >
+      Example role coordinating issue triage, release notes, and evidence-backed
+      prioritization for fictional local-first software projects.
+education:
+  - program: Certificate in Public Interest Technology
+    institution: Example Learning Cooperative
+

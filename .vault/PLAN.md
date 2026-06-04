@@ -1,8 +1,8 @@
 ---
 project: "res2jobWorks"
-date: "2026-06-03"
-status: "Active Planning"
-progress: 12
+date: "2026-06-04"
+status: "Active Implementation"
+progress: 28
 ---
 
 # res2jobWorks Project Roadmap
@@ -14,7 +14,7 @@ strategic human-facing summaries in the Obsidian project note.
 ## Current State
 
 - `res2jobWorks` is a public-generic, local-first job-search workbench that supersedes the earlier `Res2JobFit` idea.
-- Implementation has not started. The repo is a fresh Git repository on `main` with starter docs, `.vault/`, and no commits yet.
+- Plan 001 bootstrap implementation is complete: the repo has a Python-first monorepo scaffold, core command contracts, portable config defaults, a packaged starter registry, public fixtures, and behavior-first tests.
 - The locked product direction is MVP 1 evaluation and tracking, with resume tailoring, cover letters, and document generation deferred to phase 2.
 - The current planning packet was grounded in the prior Codex session `019e8a43-f147-7a81-8062-3f2b3c53641d`, the repo starter files, and the two Obsidian project notes listed below.
 
@@ -33,8 +33,8 @@ strategic human-facing summaries in the Obsidian project note.
 
 | Feature Plan | Feature | Status | Next Action |
 |---|---|---|---|
-| `.vault/plans/001-bootstrap-core-contracts-2026-06-03.md` | Monorepo foundation, Python project, public fixtures, command envelope, and test harness | Ready | `$act .vault/plans/001-bootstrap-core-contracts-2026-06-03.md` |
-| `.vault/plans/002-sqlite-evaluation-tracking-model-2026-06-03.md` | SQLite schema, migrations, repositories, and domain contracts | Planned | Start after plan 001 foundation contracts exist |
+| `.vault/plans/001-bootstrap-core-contracts-2026-06-03.md` | Monorepo foundation, Python project, public fixtures, command envelope, and test harness | Complete | Committed as bootstrap implementation; plan 002 is next |
+| `.vault/plans/002-sqlite-evaluation-tracking-model-2026-06-03.md` | SQLite schema, migrations, repositories, and domain contracts | Ready | Start SQLite persistence implementation |
 | `.vault/plans/003-import-evaluate-export-workflows-2026-06-03.md` | Profile/job import, rubric evaluation, citations, and Markdown/CSV exports | Planned | Start after plan 002 persistence layer exists |
 | `.vault/plans/004-interfaces-and-agent-wrappers-2026-06-03.md` | CLI, TUI, local web dashboard, and generated agent wrappers over shared commands | Planned | Start after plan 003 core workflows are stable |
 | `.vault/plans/005-browser-automation-human-review-2026-06-03.md` | Safe job-source capture and application-assist automation with human review | Planned | Start after manual import/evaluation paths are reliable |
@@ -56,7 +56,7 @@ strategic human-facing summaries in the Obsidian project note.
 
 ## Success Criteria
 
-- [ ] A public monorepo exists with Python-first core packages, app folders, public fixtures, docs, and behavior-first tests.
+- [x] A public monorepo exists with Python-first core packages, app folders, public fixtures, docs, and behavior-first tests.
 - [ ] A SQLite-backed core can initialize a workspace, persist profiles/jobs/evaluations/applications, and preserve status history.
 - [ ] Import/evaluate/export workflows create cited evaluation records and Markdown/CSV exports without treating exports as canonical data.
 - [ ] CLI, TUI, web dashboard, and generated agent wrappers call the same command registry and return the same stable command envelope.

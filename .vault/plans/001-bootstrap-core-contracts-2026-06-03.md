@@ -1,5 +1,5 @@
 ---
-status: Ready
+status: Complete
 priority: High
 date: 2026-06-03
 worktree_required: yes
@@ -43,7 +43,7 @@ goal_ready: true
 - Decisions:
   - [x] `.vault/decisions/foundational-architecture-2026-06-03.md`
 - Solutions:
-  - [ ] `.vault/solutions/bootstrap-core-contracts-solution-2026-06-03.md`
+  - [x] `.vault/solutions/bootstrap-core-contracts-solution-2026-06-04.md`
 - Encounters:
   - [ ] `.vault/encounters/bootstrap-core-contracts-encounter-2026-06-03.md`
 - Visual companion:
@@ -53,12 +53,12 @@ goal_ready: true
 
 ## Success Criteria
 
-- [ ] Monorepo directories exist for `apps/`, `packages/`, `docs/`, `templates/`, `examples/`, and `tests/`.
-- [ ] Python project metadata exists with a runnable package layout and development dependencies.
-- [ ] Core package exposes a stable command envelope model with `ok`, `command`, `inputs`, `data`, `files`, `warnings`, and `errors`.
-- [ ] A starter command registry exists and describes planned command ids without implementing full behavior.
-- [ ] Public-generic fixtures exist and contain no private personal data.
-- [ ] Focused behavior tests pass for command envelope serialization, config loading, and fixture validation.
+- [x] Monorepo directories exist for `apps/`, `packages/`, `docs/`, `templates/`, `examples/`, and `tests/`.
+- [x] Python project metadata exists with a runnable package layout and development dependencies.
+- [x] Core package exposes a stable command envelope model with `ok`, `command`, `inputs`, `data`, `files`, `warnings`, and `errors`.
+- [x] A starter command registry exists and describes planned command ids without implementing full behavior.
+- [x] Public-generic fixtures exist and contain no private personal data.
+- [x] Focused behavior tests pass for command envelope serialization, config loading, and fixture validation.
 
 ## Architecture Diagram
 
@@ -105,7 +105,7 @@ ASCII fallback:
 
 ## Execution Steps
 
-- [ ] Step 1: Create monorepo skeleton
+- [x] Step 1: Create monorepo skeleton
   - ACTION: Create implementation directories and project metadata.
   - IMPLEMENT: Use the target shape from `.vault/PLAN.md`; keep files small and purpose-specific.
   - FILES: `pyproject.toml`, `packages/core/`, `apps/cli/`, `apps/tui/`, `apps/web/`, `tests/`
@@ -113,7 +113,7 @@ ASCII fallback:
   - GOTCHA: Do not create UI or persistence implementation yet.
   - VALIDATE: `rg --files`
 
-- [ ] Step 2: Define command envelope and config contracts
+- [x] Step 2: Define command envelope and config contracts
   - ACTION: Add Pydantic models for command results and local config defaults.
   - IMPLEMENT: Include JSON serialization, explicit warnings/errors, and no success-shaped defaults for invalid inputs.
   - FILES: `packages/core/src/res2jobworks_core/contracts.py`, `packages/core/src/res2jobworks_core/config.py`
@@ -121,7 +121,7 @@ ASCII fallback:
   - GOTCHA: Keep provider keys out of config fixtures.
   - VALIDATE: Focused pytest for envelope/config behavior.
 
-- [ ] Step 3: Add starter command registry
+- [x] Step 3: Add starter command registry
   - ACTION: Add registry metadata for MVP command ids.
   - IMPLEMENT: Define command id, description, inputs, outputs, phase, and client support without overbuilding runtime dispatch.
   - FILES: `packages/core/src/res2jobworks_core/registry.py`, `commands/registry.yaml`
@@ -129,7 +129,7 @@ ASCII fallback:
   - GOTCHA: Registry is the source for wrappers; do not duplicate command lists elsewhere except generated docs.
   - VALIDATE: Registry validation test.
 
-- [ ] Step 4: Add public fixtures and docs
+- [x] Step 4: Add public fixtures and docs
   - ACTION: Create public example persona, profile, and job description fixtures.
   - IMPLEMENT: Use generic fictional examples and label them as fixtures.
   - FILES: `templates/profile-example.yaml`, `examples/jobs/sample-job.md`, `docs/fixtures.md`
@@ -137,7 +137,7 @@ ASCII fallback:
   - GOTCHA: No private resume, employer, tracker, or application history.
   - VALIDATE: Fixture validation test and `rg` scan for known private markers if any are documented.
 
-- [ ] Step 5: Wire tests and lightweight quality checks
+- [x] Step 5: Wire tests and lightweight quality checks
   - ACTION: Add pytest, ruff, and packaging smoke checks.
   - IMPLEMENT: Use behavior-first tests through public package entrypoints.
   - FILES: `tests/`, `pyproject.toml`
@@ -147,17 +147,17 @@ ASCII fallback:
 
 ## Code Documentation Contract
 
-- [ ] New nontrivial source files include top-level language-native documentation.
-- [ ] Public/exported functions, classes, commands, or modules have concise doc comments where their purpose or constraints are not obvious.
-- [ ] Comments explain intent, invariants, tradeoffs, or edge cases rather than restating code.
+- [x] New nontrivial source files include top-level language-native documentation.
+- [x] Public/exported functions, classes, commands, or modules have concise doc comments where their purpose or constraints are not obvious.
+- [x] Comments explain intent, invariants, tradeoffs, or edge cases rather than restating code.
 
 ## Testing Strategy (TDD)
 
 ### TDD Contract
 
-- [ ] Red: write a failing test first for each behavior change where practical
-- [ ] Green: implement the smallest change that passes
-- [ ] Refactor: improve structure while keeping tests green
+- [x] Red: write a failing test first for each behavior change where practical
+- [x] Green: implement the smallest change that passes
+- [x] Refactor: improve structure while keeping tests green
 
 ### Test File Plan
 
@@ -194,7 +194,7 @@ ASCII fallback:
   - `M1.T1` Bootstrap monorepo and core contracts
 - Dependencies:
   - None
-- Current state: ready
+- Current state: complete
 - Handoff source: `.vault/goals/goal-mvp-evaluation-tracking-2026-06-03/handoff.md`
 
 ## Verification Contract
@@ -280,3 +280,5 @@ Final evidence:
 ## Progress Log
 
 - 2026-06-03: Plan created from prior-session context and repo/Vault evidence.
+- 2026-06-04: Implemented bootstrap scaffold in the main checkout. Local verification passed with `uv run --extra dev pytest -q` (`14 passed` after package/privacy regression fixes), `uv run --extra dev ruff check .` (`All checks passed!`), `uv run python -m res2jobworks_core` (`res2jobworks-core ok workspace=.res2jobworks`), `uv build`, and a fresh installed-wheel registry check from `/tmp` (`jobs.evaluate`). Initial review findings for packaged registry loading, `.res2jobworks/` ignore coverage, fixture secret detection, README public-path disclosure, and grouped test files were fixed.
+- 2026-06-04: Review gates approved. Validator approved command/test/package evidence; reviewer approved with only non-blocking follow-up; security approved after README disclosure fix; pattern-detector approved architecture consistency. Plan 001 is complete and ready for commit/push.

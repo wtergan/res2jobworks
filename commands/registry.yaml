@@ -1,0 +1,219 @@
+version: 1
+owner: res2jobworks-core
+description: Shared command metadata for CLI, TUI, web, browser automation, and agent wrappers.
+commands:
+  - id: workspace.init
+    description: Initialize a local res2jobWorks workspace.
+    phase: mvp1
+    status: planned
+    inputs:
+      - workspace_path
+    outputs:
+      - workspace_metadata
+    clients:
+      - cli
+      - tui
+      - web
+      - agent
+  - id: profile.import
+    description: Import a public-generic profile or resume source.
+    phase: mvp1
+    status: planned
+    inputs:
+      - source_path
+      - source_type
+    outputs:
+      - profile
+      - resume_source
+    clients:
+      - cli
+      - tui
+      - web
+      - agent
+  - id: profile.show
+    description: Show a stored profile summary.
+    phase: mvp1
+    status: planned
+    inputs:
+      - profile_id
+    outputs:
+      - profile
+    clients:
+      - cli
+      - tui
+      - web
+      - agent
+  - id: profile.validate
+    description: Validate profile data before it becomes product state.
+    phase: mvp1
+    status: planned
+    inputs:
+      - profile_data
+    outputs:
+      - validation_report
+    clients:
+      - cli
+      - agent
+  - id: jobs.import
+    description: Import a job description from text or file.
+    phase: mvp1
+    status: planned
+    inputs:
+      - source
+      - source_type
+    outputs:
+      - job
+      - job_source
+    clients:
+      - cli
+      - tui
+      - web
+      - agent
+  - id: jobs.fetch
+    description: Fetch a job source for user review without applying automatically.
+    phase: mvp1
+    status: planned
+    inputs:
+      - url
+    outputs:
+      - fetched_source
+    clients:
+      - cli
+      - web
+      - agent
+  - id: jobs.evaluate
+    description: Evaluate a job against a profile with rubric evidence and citations.
+    phase: mvp1
+    status: planned
+    inputs:
+      - job_id
+      - profile_id
+      - rubric_id
+    outputs:
+      - evaluation
+      - citations
+    clients:
+      - cli
+      - tui
+      - web
+      - agent
+  - id: jobs.list
+    description: List stored jobs with evaluation and application summary fields.
+    phase: mvp1
+    status: planned
+    inputs:
+      - filters
+    outputs:
+      - jobs
+    clients:
+      - cli
+      - tui
+      - web
+      - agent
+  - id: jobs.show
+    description: Show a stored job, sources, evaluation, and tracking status.
+    phase: mvp1
+    status: planned
+    inputs:
+      - job_id
+    outputs:
+      - job_detail
+    clients:
+      - cli
+      - tui
+      - web
+      - agent
+  - id: applications.add
+    description: Add an application tracking record for a job.
+    phase: mvp1
+    status: planned
+    inputs:
+      - job_id
+      - status
+    outputs:
+      - application
+      - status_event
+    clients:
+      - cli
+      - tui
+      - web
+      - agent
+  - id: applications.update
+    description: Append a status event or note to an application.
+    phase: mvp1
+    status: planned
+    inputs:
+      - application_id
+      - status
+      - note
+    outputs:
+      - application
+      - status_event
+    clients:
+      - cli
+      - tui
+      - web
+      - agent
+  - id: applications.list
+    description: List application pipeline records from canonical state.
+    phase: mvp1
+    status: planned
+    inputs:
+      - filters
+    outputs:
+      - applications
+    clients:
+      - cli
+      - tui
+      - web
+      - agent
+  - id: applications.export
+    description: Export tracker data to generated Markdown or CSV artifacts.
+    phase: mvp1
+    status: planned
+    inputs:
+      - format
+      - output_path
+    outputs:
+      - export_record
+      - files
+    clients:
+      - cli
+      - tui
+      - web
+      - agent
+  - id: dashboard.tui
+    description: Launch the local TUI dashboard client.
+    phase: mvp1
+    status: planned
+    inputs:
+      - workspace_path
+    outputs:
+      - launch_status
+    clients:
+      - cli
+  - id: dashboard.web
+    description: Launch the local web dashboard client.
+    phase: mvp1
+    status: planned
+    inputs:
+      - workspace_path
+      - host
+      - port
+    outputs:
+      - launch_status
+    clients:
+      - cli
+  - id: skills.generate
+    description: Generate agent wrapper artifacts from shared command metadata.
+    phase: mvp1
+    status: planned
+    inputs:
+      - target_agent
+      - output_path
+    outputs:
+      - generated_files
+    clients:
+      - cli
+      - agent
+

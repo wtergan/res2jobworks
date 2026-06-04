@@ -11,7 +11,7 @@
 
 | Task ID | Plan | Task | State | Depends On | Owner/Lane | Validation |
 |---|---|---|---|---|---|---|
-| M1.T1 | `.vault/plans/001-bootstrap-core-contracts-2026-06-03.md` | Bootstrap monorepo and core contracts | ready | None | implementer | `pytest -q`, `ruff check .` |
+| M1.T1 | `.vault/plans/001-bootstrap-core-contracts-2026-06-03.md` | Bootstrap monorepo and core contracts | complete | None | implementer | `pytest -q`, `ruff check .` |
 
 ### M2: SQLite Source of Truth
 
@@ -22,7 +22,7 @@
 
 | Task ID | Plan | Task | State | Depends On | Owner/Lane | Validation |
 |---|---|---|---|---|---|---|
-| M2.T1 | `.vault/plans/002-sqlite-evaluation-tracking-model-2026-06-03.md` | Build SQLite schema, migrations, and repositories | planned | M1.T1 | implementer | `pytest -q tests/db`, `pytest -q` |
+| M2.T1 | `.vault/plans/002-sqlite-evaluation-tracking-model-2026-06-03.md` | Build SQLite schema, migrations, and repositories | ready | M1.T1 | implementer | `pytest -q tests/db`, `pytest -q` |
 
 ### M3: MVP Workflows
 
@@ -77,3 +77,4 @@
 - review_pending
 - blocked
 - complete
+- ready_next
