@@ -3,10 +3,10 @@
 ## Current Status
 
 - Phase: implementation
-- Current milestone: M3
-- Current task: M3.T1
-- Last action: 2026-06-04 - Published the two-plan refactorer gate after plan 002.
-- Next action: Implement `.vault/plans/003-import-evaluate-export-workflows-2026-06-03.md`.
+- Current milestone: M4
+- Current task: M4.T1
+- Last action: 2026-06-04 - Plan 003 verifier gates approved after reviewer fixes.
+- Next action: Commit/push plan 003, then begin `.vault/plans/004-interfaces-and-agent-wrappers-2026-06-03.md`.
 
 ## Execution Ledger
 
@@ -17,6 +17,8 @@
 - 2026-06-04 - Implemented plan 002 SQLite migration/repository/seed layer with stdlib `sqlite3`, explicit SQL migrations, append-only status events, and fixture-backed sample workspace creation.
 - 2026-06-04 - Fixed plan 002 review findings for citation ownership, application/evaluation job consistency, parent-record errors, status enums, secret redaction boundaries, packaged seed fixture loading, string database paths, list APIs, seed privacy validation, and export path validation.
 - 2026-06-04 - Published plan 002 as `ab13d0a` and the required two-plan refactorer gate as `6fc7803`; redaction policy now lives in `res2jobworks_core._privacy`.
+- 2026-06-04 - Implemented plan 003 command workflows for workspace init, profile/job import, deterministic cited evaluation, application tracking, and Markdown/CSV exports.
+- 2026-06-04 - Fixed plan 003 review findings for registry-declared `rubric_id` compatibility and duplicate deterministic ID failures returning raw SQLite exceptions.
 
 ## Validation Evidence
 
@@ -37,6 +39,11 @@
 | 2026-06-04 | Two-plan refactorer gate | `uv run --extra dev pytest -q` | pass | `43 passed` |
 | 2026-06-04 | Two-plan refactorer gate | `uv run --extra dev ruff check .` | pass | `All checks passed!` |
 | 2026-06-04 | Two-plan refactorer gate | `uv build` | pass | Built sdist and wheel after privacy-helper extraction |
+| 2026-06-04 | Plan 003 local gate | `uv run --extra dev pytest -q tests/workflows` | pass | `14 passed` |
+| 2026-06-04 | Plan 003 local gate | `uv run --extra dev pytest -q` | pass | `58 passed` |
+| 2026-06-04 | Plan 003 local gate | `uv run --extra dev ruff check .` | pass | `All checks passed!` |
+| 2026-06-04 | Plan 003 package gate | `uv build` | pass | Built sdist and wheel with packaged command modules and updated registry |
+| 2026-06-04 | Plan 003 package gate | Fresh wheel workflow smoke from `/tmp` | pass | Seeded sample DB, created deterministic evaluation with 2 citations via registry-declared `rubric_id`, added application, exported CSV, verified duplicate export returned failure envelope, and confirmed `jobs.evaluate` status is `available` |
 
 ## Review Ledger
 
@@ -52,9 +59,13 @@
 | 2026-06-04 | Plan 002 | security | approved | CamelCase secrets redacted, usage counters preserved, Windows absolute paths rejected, packaged seed privacy checks passed |
 | 2026-06-04 | Plan 002 | pattern-detector | approved | Seed fallback now matches packaged-first/source-checkout repository pattern |
 | 2026-06-04 | Plans 001-002 | refactorer | changes made | Extracted recursive secret-redaction policy into internal `_privacy` helper; published as `6fc7803` |
+| 2026-06-04 | Plan 003 | validator | approved | `14` workflow tests, `58` full tests, Ruff/build/diff check, and wheel smoke passed |
+| 2026-06-04 | Plan 003 | reviewer | approved | Registry/handler compatibility and duplicate failure-envelope blockers fixed |
+| 2026-06-04 | Plan 003 | security | approved | Export duplicate handling, path validation, metadata persistence, and no-network/browser/auto-submit boundaries approved |
+| 2026-06-04 | Plan 003 | pattern-detector | approved | Decision/solution patterns aligned with SQLite canonical state and generated exports |
 
 ## Durable Captures
 
-- Decisions: `.vault/decisions/foundational-architecture-2026-06-03.md`, `.vault/decisions/mvp-core-sqlite-source-of-truth-decision-2026-06-03.md`, `.vault/decisions/mvp-client-boundaries-decision-2026-06-03.md`, `.vault/decisions/mvp-no-autosubmit-default-decision-2026-06-03.md`, `.vault/decisions/sqlite-data-layer-2026-06-03.md`
-- Solutions: `.vault/solutions/bootstrap-core-contracts-solution-2026-06-04.md`, `.vault/solutions/sqlite-repository-pattern-2026-06-03.md`
+- Decisions: `.vault/decisions/foundational-architecture-2026-06-03.md`, `.vault/decisions/mvp-core-sqlite-source-of-truth-decision-2026-06-03.md`, `.vault/decisions/mvp-client-boundaries-decision-2026-06-03.md`, `.vault/decisions/mvp-no-autosubmit-default-decision-2026-06-03.md`, `.vault/decisions/sqlite-data-layer-2026-06-03.md`, `.vault/decisions/evaluation-strategy-2026-06-03.md`
+- Solutions: `.vault/solutions/bootstrap-core-contracts-solution-2026-06-04.md`, `.vault/solutions/sqlite-repository-pattern-2026-06-03.md`, `.vault/solutions/cited-evaluation-workflow-2026-06-03.md`
 - Encounters: none yet

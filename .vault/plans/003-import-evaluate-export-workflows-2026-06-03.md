@@ -1,5 +1,5 @@
 ---
-status: Planned
+status: Complete
 priority: High
 date: 2026-06-03
 worktree_required: yes
@@ -43,9 +43,9 @@ goal_ready: true
   - [x] `.vault/research/project-context-2026-06-03.md`
 - Decisions:
   - [x] `.vault/decisions/foundational-architecture-2026-06-03.md`
-  - [ ] `.vault/decisions/evaluation-strategy-2026-06-03.md`
+  - [x] `.vault/decisions/evaluation-strategy-2026-06-03.md`
 - Solutions:
-  - [ ] `.vault/solutions/cited-evaluation-workflow-2026-06-03.md`
+  - [x] `.vault/solutions/cited-evaluation-workflow-2026-06-03.md`
 - Encounters:
   - [ ] `.vault/encounters/evaluation-provider-encounter-2026-06-03.md`
 - Visual companion:
@@ -55,13 +55,13 @@ goal_ready: true
 
 ## Success Criteria
 
-- [ ] Users can initialize a workspace and import a public-generic profile/resume source.
-- [ ] Users can import a job description from text/file into SQLite.
-- [ ] Evaluation creates a score, rubric breakdown, recommendations, warnings, and citations tied to stored profile/job sources.
-- [ ] LLM-backed evaluation, if included, stores provider metadata, prompt/rubric version, and inspectable citations.
-- [ ] Application records can be created and status events updated through command workflows.
-- [ ] Markdown and CSV exports are generated from SQLite and recorded in export metadata.
-- [ ] Behavior tests cover successful workflows, validation failures, and reversible evaluation records.
+- [x] Users can initialize a workspace and import a public-generic profile/resume source.
+- [x] Users can import a job description from text/file into SQLite.
+- [x] Evaluation creates a score, rubric breakdown, recommendations, warnings, and citations tied to stored profile/job sources.
+- [x] LLM-backed evaluation, if included, stores provider metadata, prompt/rubric version, and inspectable citations.
+- [x] Application records can be created and status events updated through command workflows.
+- [x] Markdown and CSV exports are generated from SQLite and recorded in export metadata.
+- [x] Behavior tests cover successful workflows, validation failures, and reversible evaluation records.
 
 ## Architecture Diagram
 
@@ -120,7 +120,7 @@ profile/job import -> SQLite -> evaluate with rubric/citations -> SQLite -> Mark
 
 ## Execution Steps
 
-- [ ] Step 1: Implement workspace/profile import commands
+- [x] Step 1: Implement workspace/profile import commands
   - ACTION: Add command handlers for workspace init and profile import.
   - IMPLEMENT: Validate files/text, preserve source metadata, and return command envelopes.
   - FILES: `packages/core/src/res2jobworks_core/commands/`, `commands/registry.yaml`, `tests/workflows/`
@@ -128,7 +128,7 @@ profile/job import -> SQLite -> evaluate with rubric/citations -> SQLite -> Mark
   - GOTCHA: Do not store private fixture data in repo.
   - VALIDATE: Focused import tests.
 
-- [ ] Step 2: Implement job import and validation
+- [x] Step 2: Implement job import and validation
   - ACTION: Add text/file job import into SQLite.
   - IMPLEMENT: Store original source, normalized text, source type, and validation warnings.
   - FILES: `packages/core/src/res2jobworks_core/jobs/`, `tests/workflows/`
@@ -136,7 +136,7 @@ profile/job import -> SQLite -> evaluate with rubric/citations -> SQLite -> Mark
   - GOTCHA: URL/browser extraction belongs to later scope unless explicitly accepted.
   - VALIDATE: Job import tests.
 
-- [ ] Step 3: Implement evaluation strategy
+- [x] Step 3: Implement evaluation strategy
   - ACTION: Choose deterministic, LLM-rubric-first, or hybrid starter strategy and record ADR.
   - IMPLEMENT: Store rubric version, score dimensions, citations, warnings, and provider metadata where used.
   - FILES: `packages/core/src/res2jobworks_core/evaluation/`, `.vault/decisions/evaluation-strategy-2026-06-03.md`
@@ -144,7 +144,7 @@ profile/job import -> SQLite -> evaluate with rubric/citations -> SQLite -> Mark
   - GOTCHA: No opaque evaluation records; no live provider calls in default tests.
   - VALIDATE: Evaluation tests with fixture/provider fakes.
 
-- [ ] Step 4: Implement application tracking workflow
+- [x] Step 4: Implement application tracking workflow
   - ACTION: Add application create/update/list behavior over jobs and evaluations.
   - IMPLEMENT: Use append-only status events and notes.
   - FILES: `packages/core/src/res2jobworks_core/applications/`, `tests/workflows/`
@@ -152,7 +152,7 @@ profile/job import -> SQLite -> evaluate with rubric/citations -> SQLite -> Mark
   - GOTCHA: Do not overwrite status history.
   - VALIDATE: Status event tests.
 
-- [ ] Step 5: Implement Markdown/CSV exports
+- [x] Step 5: Implement Markdown/CSV exports
   - ACTION: Export evaluation reports and tracker summaries from SQLite.
   - IMPLEMENT: Record export metadata and output file paths in command envelopes.
   - FILES: `packages/core/src/res2jobworks_core/exports/`, `docs/exports.md`
@@ -162,17 +162,17 @@ profile/job import -> SQLite -> evaluate with rubric/citations -> SQLite -> Mark
 
 ## Code Documentation Contract
 
-- [ ] Workflow modules document command boundaries and side effects.
-- [ ] Evaluation public APIs document provider use, citation expectations, and reversibility constraints.
-- [ ] Export modules document generated-file behavior and canonical-state boundaries.
+- [x] Workflow modules document command boundaries and side effects.
+- [x] Evaluation public APIs document provider use, citation expectations, and reversibility constraints.
+- [x] Export modules document generated-file behavior and canonical-state boundaries.
 
 ## Testing Strategy (TDD)
 
 ### TDD Contract
 
-- [ ] Red: write workflow-level tests through command handlers first
-- [ ] Green: implement the smallest behavior that satisfies each workflow
-- [ ] Refactor: extract service modules after workflows are green
+- [x] Red: write workflow-level tests through command handlers first
+- [x] Green: implement the smallest behavior that satisfies each workflow
+- [x] Refactor: extract service modules after workflows are green
 
 ### Test File Plan
 
@@ -210,7 +210,7 @@ profile/job import -> SQLite -> evaluate with rubric/citations -> SQLite -> Mark
   - `M3.T1` Implement import/evaluate/export workflows
 - Dependencies:
   - `M3.T1` depends on `M2.T1`
-- Current state: planned
+- Current state: complete
 - Handoff source: `.vault/goals/goal-mvp-evaluation-tracking-2026-06-03/handoff.md`
 
 ## Verification Contract
@@ -286,10 +286,14 @@ Final evidence:
 
 ## Open Questions
 
-- [ ] Should MVP evaluation be deterministic-first, LLM-rubric-first, or hybrid?
-- [ ] What minimum citation granularity is required for MVP: source-only, paragraph, or span?
-- [ ] Should safe URL fetch be included here or deferred entirely to plan 005?
+- [x] Should MVP evaluation be deterministic-first, LLM-rubric-first, or hybrid? Resolved: deterministic-first for MVP 1, with later LLM adapters behind the same cited record shape.
+- [x] What minimum citation granularity is required for MVP: source-only, paragraph, or span? Resolved: source-bound quotes are required; exact offsets remain optional.
+- [x] Should safe URL fetch be included here or deferred entirely to plan 005? Resolved: defer URL/browser fetching to plan 005.
 
 ## Progress Log
 
 - 2026-06-03: Plan created from roadmap and foundational ADR.
+- 2026-06-04: Implemented modular command workflows for workspace init, profile/job import, deterministic cited evaluation, application add/update/list, and Markdown/CSV tracker exports. Registry statuses now mark only implemented command handlers as `available`.
+- 2026-06-04: Captured deterministic-first evaluation strategy in `.vault/decisions/evaluation-strategy-2026-06-03.md` and reusable citation/export pattern in `.vault/solutions/cited-evaluation-workflow-2026-06-03.md`.
+- 2026-06-04: Local verification passed with `uv run --extra dev pytest -q tests/workflows` (`14 passed`), `uv run --extra dev pytest -q` (`58 passed`), `uv run --extra dev ruff check .`, `uv build`, `git diff --check`, and a fresh installed-wheel workflow smoke from `/tmp`.
+- 2026-06-04: Reviewer blockers for registry/handler `rubric_id` mismatch and duplicate deterministic IDs escaping as raw SQLite exceptions were fixed with command-envelope regression tests for duplicate profile imports, evaluations, applications, and exports.

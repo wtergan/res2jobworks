@@ -135,6 +135,21 @@ class SQLiteRepository:
                 "SELECT * FROM profiles ORDER BY created_at, id",
             )
 
+    def list_resume_sources(self, profile_id: str) -> list[dict[str, Any]]:
+        """Return source records attached to one profile."""
+        _require(profile_id, "profile_id")
+        with connect(self.database_path) as connection:
+            self._require_record_exists(connection, "profiles", profile_id)
+            return _many(
+                connection,
+                """
+                SELECT * FROM resume_sources
+                WHERE profile_id = ?
+                ORDER BY created_at, id
+                """,
+                profile_id,
+            )
+
     def create_job(
         self,
         *,
@@ -220,6 +235,21 @@ class SQLiteRepository:
             return _many(
                 connection,
                 "SELECT * FROM jobs ORDER BY created_at, id",
+            )
+
+    def list_job_sources(self, job_id: str) -> list[dict[str, Any]]:
+        """Return source records attached to one job."""
+        _require(job_id, "job_id")
+        with connect(self.database_path) as connection:
+            self._require_record_exists(connection, "jobs", job_id)
+            return _many(
+                connection,
+                """
+                SELECT * FROM job_sources
+                WHERE job_id = ?
+                ORDER BY created_at, id
+                """,
+                job_id,
             )
 
     def create_evaluation(

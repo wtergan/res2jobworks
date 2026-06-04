@@ -33,7 +33,7 @@
 
 | Task ID | Plan | Task | State | Depends On | Owner/Lane | Validation |
 |---|---|---|---|---|---|---|
-| M3.T1 | `.vault/plans/003-import-evaluate-export-workflows-2026-06-03.md` | Build import/evaluate/export workflows | ready_next | M2.T1 | implementer | `pytest -q tests/workflows`, `pytest -q` |
+| M3.T1 | `.vault/plans/003-import-evaluate-export-workflows-2026-06-03.md` | Build import/evaluate/export workflows | complete | M2.T1 | implementer | `pytest -q tests/workflows`, `pytest -q` |
 
 ### M4: Interfaces
 
@@ -44,7 +44,7 @@
 
 | Task ID | Plan | Task | State | Depends On | Owner/Lane | Validation |
 |---|---|---|---|---|---|---|
-| M4.T1 | `.vault/plans/004-interfaces-and-agent-wrappers-2026-06-03.md` | Build clients and generated wrappers | planned | M3.T1 | implementer/design-iterator | `pytest -q tests/parity`, browser/accessibility checks |
+| M4.T1 | `.vault/plans/004-interfaces-and-agent-wrappers-2026-06-03.md` | Build clients and generated wrappers | ready_next | M3.T1 | implementer/design-iterator | `pytest -q tests/parity`, browser/accessibility checks |
 
 ### M5: Automation Follow-Up
 
