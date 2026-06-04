@@ -34,8 +34,9 @@ commands:
   - id: profile.show
     description: Show a stored profile summary.
     phase: mvp1
-    status: planned
+    status: available
     inputs:
+      - database_path
       - profile_id
     outputs:
       - profile
@@ -103,8 +104,9 @@ commands:
   - id: jobs.list
     description: List stored jobs with evaluation and application summary fields.
     phase: mvp1
-    status: planned
+    status: available
     inputs:
+      - database_path
       - filters
     outputs:
       - jobs
@@ -116,8 +118,9 @@ commands:
   - id: jobs.show
     description: Show a stored job, sources, evaluation, and tracking status.
     phase: mvp1
-    status: planned
+    status: available
     inputs:
+      - database_path
       - job_id
     outputs:
       - job_detail

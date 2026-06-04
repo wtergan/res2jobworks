@@ -15,8 +15,11 @@ def test_registry_entries_should_have_required_metadata() -> None:
     assert available_command_ids == {
         "workspace.init",
         "profile.import",
+        "profile.show",
         "jobs.import",
         "jobs.evaluate",
+        "jobs.list",
+        "jobs.show",
         "applications.add",
         "applications.update",
         "applications.list",

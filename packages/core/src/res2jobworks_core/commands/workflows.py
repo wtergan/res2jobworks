@@ -8,6 +8,7 @@ from res2jobworks_core.commands.applications import (
 from res2jobworks_core.commands.evaluation import evaluate_job
 from res2jobworks_core.commands.exports import export_applications
 from res2jobworks_core.commands.imports import import_job, import_profile
+from res2jobworks_core.commands.queries import list_jobs, show_job, show_profile
 from res2jobworks_core.commands.workspace import init_workspace
 
 __all__ = [
@@ -18,5 +19,8 @@ __all__ = [
     "import_profile",
     "init_workspace",
     "list_applications",
+    "list_jobs",
+    "show_job",
+    "show_profile",
     "update_application",
 ]

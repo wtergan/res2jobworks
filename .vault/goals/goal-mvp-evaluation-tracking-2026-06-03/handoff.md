@@ -10,7 +10,7 @@
 
 ## Latest Known State
 
-Plans 001 and 002 are complete, committed, and published. The required two-plan refactorer gate after plan 002 is also published. Plan 003 is implemented and verifier-approved; it is ready to commit and publish.
+Plans 001, 002, and 003 are complete, committed, and published. The required two-plan refactorer gate after plan 002 is also published. Plan 004 is implemented and locally verified; it is ready for verifier review, commit, publish, and the next two-plan refactorer gate.
 
 Implemented plan 002 scope:
 
@@ -29,6 +29,14 @@ Implemented plan 003 scope:
 - Export documentation that keeps Markdown/CSV as generated artifacts from SQLite.
 - Command-envelope failure handling for duplicate deterministic IDs and unsupported rubric IDs.
 
+Implemented plan 004 scope:
+
+- CLI direct commands and `res2jobworks run <command-id> --json --input key=value` registry runner over core command handlers.
+- Read-only TUI and static local web dashboard renderers over `jobs.list` and `jobs.show`.
+- Full citation-backed `jobs.show` query envelopes for UI detail views.
+- Registry-driven wrapper generator for Codex and Hermes plus documented Claude/OpenCode/Gemini stubs.
+- Client parity tests proving CLI runner output matches direct core command envelopes.
+
 ## Validation Evidence
 
 - `uv run --extra dev pytest -q tests/db` -> `29 passed`
@@ -39,6 +47,12 @@ Implemented plan 003 scope:
 - Source checkout seed from `/tmp` -> sample workspace created without cwd-relative fixture access
 - Two-plan refactorer gate -> `29` DB tests, `43` full tests, Ruff, whitespace check, and package build passed
 - Plan 003 -> `14` workflow tests, `58` full tests, Ruff, build, diff check, and fresh installed-wheel workflow smoke passed
+- Plan 004 -> `10` focused interface/wrapper/parity tests passed
+- Plan 004 -> `68` full tests passed
+- Plan 004 -> Ruff passed
+- Plan 004 -> `uv build` built sdist and wheel
+- Plan 004 -> installed-wheel smoke passed for `res2jobworks run`, evaluation citations, and `res2jobworks-generate-wrappers`
+- Plan 004 browser MCP -> blocked by missing Chrome; encounter captured
 
 ## Review State
 
@@ -58,10 +72,41 @@ Plan 003 verifier state:
 
 ## Next Action
 
-1. Commit plan 003 atomically with subject `FEAT: add import evaluate export workflows`.
-2. Publish `main` to `wtergan/res2jobworks` using the API fast-forward path if the helper cannot push local-only commit objects.
-3. Start plan 004 interfaces and agent wrappers.
+1. Run Plan 004 verifier/reviewer/security/pattern checks and resolve findings.
+2. Commit plan 004 atomically with subject `FEAT: add client interfaces and wrappers`.
+3. Publish `main` to `wtergan/res2jobworks` using the API fast-forward path if the helper cannot push local-only commit objects.
+4. Run the required two-plan refactorer gate for plans 003 and 004.
 
 ## Stop Conditions
 
-- Do not start browser automation, auto-submit, or phase 2 document generation before plan 004 client parity is stable.
+- Do not start browser automation, auto-submit, or phase 2 document generation before plan 004 is committed and the two-plan refactorer gate is complete.
+
+<!-- codex-vault-memory-advisor:start -->
+## Automated Handoff Snapshot
+
+- Updated: 2026-06-04T11:06:35-04:00
+- Event: `precompact`
+- Repo: `/home/gilgames/Code/res2jobworks`
+- Branch: `main`
+- Active goal: `.vault/goals/goal-mvp-evaluation-tracking-2026-06-03/`
+- Active plan: `.vault/plans/001-bootstrap-core-contracts-2026-06-03.md`
+- Changed files: 16
+  - `apps/__init__.py`
+  - `apps/cli/__init__.py`
+  - `apps/cli/res2jobworks_cli.py`
+  - `apps/tui/__init__.py`
+  - `apps/tui/res2jobworks_tui.py`
+  - `apps/web/__init__.py`
+  - `ommands/registry.yaml`
+  - `packages/core/src/res2jobworks_core/commands/__init__.py`
+  - `packages/core/src/res2jobworks_core/commands/queries.py`
+  - `packages/core/src/res2jobworks_core/commands/workflows.py`
+  - `pyproject.toml`
+  - `tests/cli/`
+  - ... 4 more
+- Last progress: - Encounters: none yet
+
+### Capture Queue
+- Encounter candidate: goal progress mentions a blocker/error/failure/root cause, but no `.vault/encounters/` file changed.
+- Solution candidate: progress suggests a fix/resolution with production changes, but no `.vault/solutions/` file changed.
+<!-- codex-vault-memory-advisor:end -->

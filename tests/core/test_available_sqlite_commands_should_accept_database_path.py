@@ -5,8 +5,11 @@ def test_available_sqlite_commands_should_accept_database_path() -> None:
     registry = load_command_registry()
     sqlite_command_ids = {
         "profile.import",
+        "profile.show",
         "jobs.import",
         "jobs.evaluate",
+        "jobs.list",
+        "jobs.show",
         "applications.add",
         "applications.update",
         "applications.list",
