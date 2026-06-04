@@ -14,6 +14,15 @@ from res2jobworks_documents.drafting import (
 )
 from res2jobworks_documents.renderers import render_document_artifact
 
+SUGGEST_TAILORING_COMMAND = "documents.suggest_tailoring"
+DRAFT_COVER_LETTER_COMMAND = "documents.draft_cover_letter"
+DRAFT_APPLICATION_ANSWER_COMMAND = "documents.draft_application_answer"
+RENDER_COVER_LETTER_COMMAND = "documents.render_cover_letter"
+
+TAILORING_REVIEW_WARNING = "tailoring suggestions require human review before use"
+DRAFT_REVIEW_WARNING = "draft requires human review before use"
+ARTIFACT_REVIEW_WARNING = "generated document artifact requires human review"
+
 
 def suggest_tailoring(
     database_path: Path | str,
@@ -23,7 +32,7 @@ def suggest_tailoring(
     evaluation_id: str | None = None,
 ) -> CommandEnvelope:
     """Return evidence-backed tailoring suggestions for human review."""
-    command = "documents.suggest_tailoring"
+    command = SUGGEST_TAILORING_COMMAND
     inputs = _inputs(database_path, profile_id, job_id, evaluation_id)
     try:
         suggestions = build_tailoring_suggestions(
@@ -36,7 +45,7 @@ def suggest_tailoring(
             command,
             inputs=inputs,
             data={"suggestions": suggestions},
-            warnings=["tailoring suggestions require human review before use"],
+            warnings=[TAILORING_REVIEW_WARNING],
         )
     except (RepositoryError, ValueError) as exc:
         return failure(command, inputs, exc)
@@ -51,7 +60,7 @@ def draft_cover_letter(
     requested_focus: tuple[str, ...] = (),
 ) -> CommandEnvelope:
     """Return a cited cover letter draft without rendering or submission."""
-    command = "documents.draft_cover_letter"
+    command = DRAFT_COVER_LETTER_COMMAND
     inputs = {
         **_inputs(database_path, profile_id, job_id, evaluation_id),
         "requested_focus": list(requested_focus),
@@ -68,7 +77,7 @@ def draft_cover_letter(
             command,
             inputs=inputs,
             data={"draft": draft.to_dict()},
-            warnings=["draft requires human review before use"],
+            warnings=[DRAFT_REVIEW_WARNING],
         )
     except (RepositoryError, ValueError) as exc:
         return failure(command, inputs, exc)
@@ -83,7 +92,7 @@ def draft_application_answer(
     evaluation_id: str | None = None,
 ) -> CommandEnvelope:
     """Return a cited application-answer draft without rendering or submission."""
-    command = "documents.draft_application_answer"
+    command = DRAFT_APPLICATION_ANSWER_COMMAND
     inputs = {
         **_inputs(database_path, profile_id, job_id, evaluation_id),
         "question": question,
@@ -100,7 +109,7 @@ def draft_application_answer(
             command,
             inputs=inputs,
             data={"draft": draft.to_dict()},
-            warnings=["draft requires human review before use"],
+            warnings=[DRAFT_REVIEW_WARNING],
         )
     except (RepositoryError, ValueError) as exc:
         return failure(command, inputs, exc)
@@ -116,7 +125,7 @@ def render_cover_letter(
     evaluation_id: str | None = None,
 ) -> CommandEnvelope:
     """Render a cover letter artifact and record export metadata."""
-    command = "documents.render_cover_letter"
+    command = RENDER_COVER_LETTER_COMMAND
     inputs = {
         **_inputs(database_path, profile_id, job_id, evaluation_id),
         "format": format,
@@ -142,7 +151,7 @@ def render_cover_letter(
             inputs=inputs,
             data={"draft": draft.to_dict(), "export_record": export_record},
             files=[str(output_path)],
-            warnings=["generated document artifact requires human review"],
+            warnings=[ARTIFACT_REVIEW_WARNING],
         )
     except (RepositoryError, ValueError) as exc:
         return failure(command, inputs, exc)

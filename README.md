@@ -6,16 +6,17 @@ The project supersedes the earlier `Res2JobFit` idea. Its first product goal is 
 
 ## Current Status
 
-Bootstrap implementation has started. The repo now has a Python-first monorepo
-scaffold, a core package with shared command contracts, public fixtures, a
-starter command registry, and behavior-first tests.
+Plans 001-006 are implemented. The repo has a Python-first monorepo scaffold,
+SQLite-backed core workflows, public fixtures, CLI/TUI/web client surfaces,
+generated agent-wrapper contracts, safe browser capture/fill-review helpers,
+and evidence-backed phase 2 document generation.
 
-Run the current bootstrap checks with:
+Run the current checks with:
 
 ```bash
 uv run --extra dev pytest -q
 uv run --extra dev ruff check .
-uv run python -m res2jobworks_core
+uv build
 ```
 
 ## Locked Direction
@@ -29,10 +30,10 @@ uv run python -m res2jobworks_core
 - Agents, TUI, and web UI are clients; the core owns product truth.
 - Default product behavior never auto-submits applications.
 
-## Planned MVP 1
+## Implemented Workflow
 
 ```text
-public setup
+workspace init
 -> profile/resume import
 -> job/JD import
 -> evaluation with citations
@@ -40,6 +41,8 @@ public setup
 -> TUI dashboard
 -> web dashboard
 -> Markdown/CSV exports
+-> safe browser capture/fill review
+-> evidence-backed document drafts and artifacts
 -> generated agent wrappers
 ```
 
@@ -52,5 +55,7 @@ public setup
 
 ## Next Step
 
-Implement the SQLite evaluation/tracking model in
-`.vault/plans/002-sqlite-evaluation-tracking-model-2026-06-03.md`.
+Use `.vault/PLAN.md` and the completed feature plans in `.vault/plans/` as the
+current engineering index. Preserve the documented SQLite source-of-truth,
+public-generic fixture, and no-default-auto-submit boundaries when extending the
+product.

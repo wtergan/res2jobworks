@@ -42,7 +42,7 @@ strategic human-facing summaries in the Obsidian project note.
 | `.vault/plans/003-import-evaluate-export-workflows-2026-06-03.md` | Profile/job import, rubric evaluation, citations, and Markdown/CSV exports | Complete | Published |
 | `.vault/plans/004-interfaces-and-agent-wrappers-2026-06-03.md` | CLI, TUI, local web dashboard, and generated agent wrappers over shared commands | Complete | Commit/push plan 004, then run two-plan refactorer gate |
 | `.vault/plans/005-browser-automation-human-review-2026-06-03.md` | Safe job-source capture and application-assist automation with human review | Complete | Commit and publish |
-| `.vault/plans/006-tailoring-documents-phase2-2026-06-03.md` | Resume tailoring, cover letters, application answers, and document rendering | Complete | Commit and publish, then run post-Plans 005-006 refactorer gate |
+| `.vault/plans/006-tailoring-documents-phase2-2026-06-03.md` | Resume tailoring, cover letters, application answers, and document rendering | Complete | Published; post-Plans 005-006 refactorer gate complete |
 
 ## Active Goal Runs
 

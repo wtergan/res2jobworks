@@ -5,8 +5,8 @@
 - Phase: implementation
 - Current milestone: M6
 - Current task: M6.T1
-- Last action: 2026-06-04 - Plan 006 reviewer/security re-review approved after skill-boundary, artifact finalization, and command parity fixes.
-- Next action: Commit and publish Plan 006, then run the required post-Plans 005-006 refactorer gate.
+- Last action: 2026-06-04 - Post-Plans 005-006 refactorer gate approved after README/doc cleanup and document command constant extraction.
+- Next action: Continue with the next user-selected feature or planning lane.
 
 ## Execution Ledger
 
@@ -26,6 +26,7 @@
 - 2026-06-04 - Implemented Plan 006 evidence-backed tailoring and document generation with deterministic drafts, readiness checks, Markdown/DOCX/PDF artifacts, document command runners, and migration 002 for document export metadata.
 - 2026-06-04 - Fixed Plan 006 re-review blockers: provider metadata matches no longer become supported claims without profile/citation evidence, document rendering cleans up temporary artifacts if export metadata recording fails, and application-answer drafts are exposed through the shared registry and CLI.
 - 2026-06-04 - Fixed Plan 006 reviewer follow-up by replacing provider skill substring checks with normalized term/phrase boundary matching and adding the one-letter skill regression.
+- 2026-06-04 - Ran the required post-Plans 005-006 refactorer gate; updated stale README/docs and extracted document command constants without changing behavior.
 
 ## Validation Evidence
 
@@ -75,6 +76,11 @@
 | 2026-06-04 | Plan 006 re-review fixes | `uv run --extra dev pytest -q` | pass | `97 passed` |
 | 2026-06-04 | Plan 006 re-review fixes | `uv run --extra dev ruff check .` | pass | `All checks passed!` |
 | 2026-06-04 | Plan 006 re-review fixes | `uv build` | pass | Built sdist and wheel after re-review fixes |
+| 2026-06-04 | Plans 005-006 refactorer gate | `uv run --extra dev pytest -q tests/documents tests/automation tests/security tests/core/test_registry_entries_should_have_required_metadata.py tests/wrappers/test_available_agent_commands_should_match_runner_inputs.py` | pass | `25 passed` |
+| 2026-06-04 | Plans 005-006 refactorer gate | `uv run --extra dev pytest -q` | pass | `97 passed` |
+| 2026-06-04 | Plans 005-006 refactorer gate | `uv run --extra dev ruff check .` | pass | `All checks passed!` |
+| 2026-06-04 | Plans 005-006 refactorer gate | `uv build` | pass | Built sdist and wheel |
+| 2026-06-04 | Plans 005-006 refactorer gate | `git diff --check` | pass | No whitespace errors |
 
 ## Review Ledger
 
@@ -111,6 +117,7 @@
 | 2026-06-04 | Plan 006 | reviewer | request changes | Artifact finalization and application-answer command parity blockers fixed with temp/finalize flow and registry/CLI command |
 | 2026-06-04 | Plan 006 | security | approved | Re-review found no blocking security issues after provider metadata was separated from supported evidence claims |
 | 2026-06-04 | Plan 006 | reviewer | approved | Re-review found no blocking findings after normalized term/phrase skill matching and registry metadata coverage |
+| 2026-06-04 | Plans 005-006 | refactorer | approved | Updated stale docs and extracted document command constants; validation remained green |
 
 ## Durable Captures
 
