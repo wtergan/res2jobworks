@@ -15,7 +15,7 @@ strategic human-facing summaries in the Obsidian project note.
 
 - `res2jobWorks` is a public-generic, local-first job-search workbench that supersedes the earlier `Res2JobFit` idea.
 - Plan 001 bootstrap implementation is complete: the repo has a Python-first monorepo scaffold, core command contracts, portable config defaults, a packaged starter registry, public fixtures, and behavior-first tests.
-- Plan 002 SQLite persistence is complete: explicit SQLite migrations, repository APIs, fixture seeding, status constraints, source fallback, privacy/path guards, and database tests are implemented without exposing workflow commands as available.
+- Plan 002 SQLite persistence is complete: explicit SQLite migrations, repository APIs, fixture seeding, status constraints, source fallback, privacy/path guards, and database tests are implemented without exposing workflow commands as available; the two-plan refactorer gate is also published.
 - The locked product direction is MVP 1 evaluation and tracking, with resume tailoring, cover letters, and document generation deferred to phase 2.
 - The current planning packet was grounded in the prior Codex session `019e8a43-f147-7a81-8062-3f2b3c53641d`, the repo starter files, and the two Obsidian project notes listed below.
 
@@ -35,8 +35,8 @@ strategic human-facing summaries in the Obsidian project note.
 | Feature Plan | Feature | Status | Next Action |
 |---|---|---|---|
 | `.vault/plans/001-bootstrap-core-contracts-2026-06-03.md` | Monorepo foundation, Python project, public fixtures, command envelope, and test harness | Complete | Committed as bootstrap implementation; plan 002 is next |
-| `.vault/plans/002-sqlite-evaluation-tracking-model-2026-06-03.md` | SQLite schema, migrations, repositories, and domain contracts | Complete | Commit/push plan 002, then run the two-plan refactorer gate |
-| `.vault/plans/003-import-evaluate-export-workflows-2026-06-03.md` | Profile/job import, rubric evaluation, citations, and Markdown/CSV exports | Ready Next | Start after plan 002 commit and refactorer gate land |
+| `.vault/plans/002-sqlite-evaluation-tracking-model-2026-06-03.md` | SQLite schema, migrations, repositories, and domain contracts | Complete | Published with follow-up refactorer gate |
+| `.vault/plans/003-import-evaluate-export-workflows-2026-06-03.md` | Profile/job import, rubric evaluation, citations, and Markdown/CSV exports | In Progress | Implement workflow command handlers over the SQLite core |
 | `.vault/plans/004-interfaces-and-agent-wrappers-2026-06-03.md` | CLI, TUI, local web dashboard, and generated agent wrappers over shared commands | Planned | Start after plan 003 core workflows are stable |
 | `.vault/plans/005-browser-automation-human-review-2026-06-03.md` | Safe job-source capture and application-assist automation with human review | Planned | Start after manual import/evaluation paths are reliable |
 | `.vault/plans/006-tailoring-documents-phase2-2026-06-03.md` | Resume tailoring, cover letters, application answers, and document rendering | Deferred | Start only after MVP 1 evaluation/tracking is proven |

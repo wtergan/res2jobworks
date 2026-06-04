@@ -3,14 +3,14 @@
 ## Resume Here
 
 - Active goal run: `.vault/goals/goal-mvp-evaluation-tracking-2026-06-03/`
-- Current milestone/task: `M2.T1`
+- Current milestone/task: `M3.T1`
 - Current branch/worktree: `main` in `/home/gilgames/Code/res2jobworks`
-- Active plan: `.vault/plans/002-sqlite-evaluation-tracking-model-2026-06-03.md`
+- Active plan: `.vault/plans/003-import-evaluate-export-workflows-2026-06-03.md`
 - GitHub repo: `https://github.com/wtergan/res2jobworks`
 
 ## Latest Known State
 
-Plan 001 is complete, committed, and published. Plan 002 SQLite persistence is implemented and verifier-approved; it is ready to commit and publish.
+Plan 001 is complete, committed, and published. Plan 002 SQLite persistence is complete, committed, published, and followed by the required two-plan refactorer gate.
 
 Implemented plan 002 scope:
 
@@ -19,6 +19,7 @@ Implemented plan 002 scope:
 - Citation ownership validation for evaluation profile/job, application/evaluation job consistency, parent-record validation with `RepositoryError`, bounded status values, append-only status history, export path validation, and recursive secret redaction.
 - Public fixture seed helper exported from the root package and verified from an installed wheel.
 - SQLite data-layer ADR and reusable repository-pattern solution note.
+- Internal privacy helper extraction published as `6fc7803` after the refactorer gate.
 
 ## Validation Evidence
 
@@ -28,10 +29,11 @@ Implemented plan 002 scope:
 - `uv build` -> built sdist and wheel
 - Fresh wheel install from `/tmp` -> packaged fixtures and migration loaded, valid status insert worked, camelCase access-token/client-secret metadata redacted while token usage counts remained intact, and Windows absolute export paths were rejected
 - Source checkout seed from `/tmp` -> sample workspace created without cwd-relative fixture access
+- Two-plan refactorer gate -> `29` DB tests, `43` full tests, Ruff, whitespace check, and package build passed
 
 ## Review State
 
-Verifier agents approved the final plan 002 diff after status enums, source fallback, camelCase redaction, and Windows export-path fixes.
+Verifier agents approved the final plan 002 diff after status enums, source fallback, camelCase redaction, and Windows export-path fixes. The follow-up refactorer gate made a small privacy-helper extraction and passed validation.
 
 - validator: `APPROVED`
 - reviewer: `APPROVED`
@@ -40,11 +42,11 @@ Verifier agents approved the final plan 002 diff after status enums, source fall
 
 ## Next Action
 
-1. Commit plan 002 atomically with subject `FEAT: add sqlite persistence model`.
-2. Publish `main` to `wtergan/res2jobworks` using the `git-push` skill/API fast-forward path if direct push hooks block.
-3. Spawn the required refactorer gate because two feature-plan implementations are complete.
-4. Start plan 003 after refactorer findings are handled and committed.
+1. Implement plan 003 import/evaluate/export workflows over the SQLite core.
+2. Keep exports as generated artifacts and deterministic evaluation cited/versioned.
+3. Run validator/reviewer/security/pattern gates before marking plan 003 complete.
+4. Commit and publish plan 003 atomically.
 
 ## Stop Conditions
 
-- Do not expand into import/evaluate/export workflows before plan 002 is committed and the refactorer gate after two implementations is complete.
+- Do not expand into UI, browser automation, auto-submit, or phase 2 document generation while implementing plan 003.

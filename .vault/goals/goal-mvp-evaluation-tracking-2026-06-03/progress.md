@@ -3,10 +3,10 @@
 ## Current Status
 
 - Phase: implementation
-- Current milestone: M2
-- Current task: M2.T1
-- Last action: 2026-06-04 - Plan 002 verifier gates approved after local/package validation.
-- Next action: Commit/push plan 002, then run the refactorer gate after two completed feature-plan implementations.
+- Current milestone: M3
+- Current task: M3.T1
+- Last action: 2026-06-04 - Published the two-plan refactorer gate after plan 002.
+- Next action: Implement `.vault/plans/003-import-evaluate-export-workflows-2026-06-03.md`.
 
 ## Execution Ledger
 
@@ -16,6 +16,7 @@
 - 2026-06-04 - Fixed plan 001 review findings: packaged registry loading, no implicit cwd registry fallback, recursive fixture privacy validation, `.res2jobworks/` ignore coverage, public README path disclosure, and one-behavior-per-file tests.
 - 2026-06-04 - Implemented plan 002 SQLite migration/repository/seed layer with stdlib `sqlite3`, explicit SQL migrations, append-only status events, and fixture-backed sample workspace creation.
 - 2026-06-04 - Fixed plan 002 review findings for citation ownership, application/evaluation job consistency, parent-record errors, status enums, secret redaction boundaries, packaged seed fixture loading, string database paths, list APIs, seed privacy validation, and export path validation.
+- 2026-06-04 - Published plan 002 as `ab13d0a` and the required two-plan refactorer gate as `6fc7803`; redaction policy now lives in `res2jobworks_core._privacy`.
 
 ## Validation Evidence
 
@@ -32,6 +33,10 @@
 | 2026-06-04 | Plan 002 package gate | `uv build` | pass | Built `dist/res2jobworks-0.1.0.tar.gz` and `dist/res2jobworks-0.1.0-py3-none-any.whl` |
 | 2026-06-04 | Plan 002 package gate | Fresh wheel install from `/tmp` | pass | Packaged seed fixtures and migration loaded; valid status insert worked; camelCase access token/client secret metadata redacted while usage counts remained intact; Windows absolute export path rejected |
 | 2026-06-04 | Plan 002 source fallback gate | Source checkout seed from `/tmp` | pass | `seed_public_sample_workspace` created a sample DB without cwd-relative fixture access |
+| 2026-06-04 | Two-plan refactorer gate | `uv run --extra dev pytest -q tests/db` | pass | `29 passed` |
+| 2026-06-04 | Two-plan refactorer gate | `uv run --extra dev pytest -q` | pass | `43 passed` |
+| 2026-06-04 | Two-plan refactorer gate | `uv run --extra dev ruff check .` | pass | `All checks passed!` |
+| 2026-06-04 | Two-plan refactorer gate | `uv build` | pass | Built sdist and wheel after privacy-helper extraction |
 
 ## Review Ledger
 
@@ -46,6 +51,7 @@
 | 2026-06-04 | Plan 002 | reviewer | approved | Citation ownership, job consistency, status enums, source fallback, redaction, and Windows path regressions covered |
 | 2026-06-04 | Plan 002 | security | approved | CamelCase secrets redacted, usage counters preserved, Windows absolute paths rejected, packaged seed privacy checks passed |
 | 2026-06-04 | Plan 002 | pattern-detector | approved | Seed fallback now matches packaged-first/source-checkout repository pattern |
+| 2026-06-04 | Plans 001-002 | refactorer | changes made | Extracted recursive secret-redaction policy into internal `_privacy` helper; published as `6fc7803` |
 
 ## Durable Captures
 
