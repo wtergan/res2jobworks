@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>res2jobWorks Roadmap and Architecture</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #1f2933;
+      --muted: #5f6f80;
+      --line: #d7dee8;
+      --paper: #f5f7fa;
+      --panel: #ffffff;
+      --accent: #0f766e;
+      --blue: #2f5f98;
+      --amber: #9a5f13;
+      --rose: #9f3a55;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+    }
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 32px auto 48px;
+    }
+    header {
+      margin-bottom: 24px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 34px;
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+    p {
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 860px;
+    }
+    code {
+      background: #e9eef5;
+      border-radius: 4px;
+      padding: 2px 5px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+    }
+    .panel strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(150px, 1fr));
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+    }
+    .step {
+      min-height: 148px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-top: 5px solid var(--accent);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .step:nth-child(2) { border-top-color: var(--blue); }
+    .step:nth-child(3) { border-top-color: var(--amber); }
+    .step:nth-child(4) { border-top-color: var(--rose); }
+    .step:nth-child(5) { border-top-color: var(--blue); }
+    .step:nth-child(6) { border-top-color: var(--amber); }
+    .step span {
+      display: inline-block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .architecture {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) minmax(260px, 1.2fr) minmax(220px, 1fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+    .layer {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .layer ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .core {
+      border: 2px solid var(--accent);
+    }
+    .risk-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 12px;
+    }
+    .risk {
+      border-left: 4px solid var(--rose);
+    }
+    @media (max-width: 820px) {
+      .architecture {
+        grid-template-columns: 1fr;
+      }
+      .flow {
+        grid-template-columns: repeat(6, minmax(220px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>res2jobWorks Roadmap and Architecture</h1>
+      <p>Self-contained companion for <code>.vault/PLAN.md</code> and the feature-plan sequence created on 2026-06-03. This view keeps the product boundaries, implementation order, and validation gates visible before the first code scaffold.</p>
+    </header>
+
+    <section class="grid" aria-label="Planning summary">
+      <article class="panel">
+        <h2>Product Boundary</h2>
+        <p>Public-generic, local-first job-search workbench. Personal workflow is dogfooding, not the product default.</p>
+      </article>
+      <article class="panel">
+        <h2>MVP 1</h2>
+        <p>Profile and job import, cited evaluation, SQLite tracking, dashboards, exports, and generated agent wrappers.</p>
+      </article>
+      <article class="panel">
+        <h2>Phase 2</h2>
+        <p>Resume tailoring, cover letters, answer drafting, and PDF/DOCX generation after evaluation and tracking stabilize.</p>
+      </article>
+    </section>
+
+    <section class="panel" aria-label="Architecture layers">
+      <h2>Architecture Layers</h2>
+      <div class="architecture">
+        <div class="layer">
+          <strong>Clients</strong>
+          <ul>
+            <li>CLI</li>
+            <li>TUI</li>
+            <li>Local web dashboard</li>
+            <li>Browser automation</li>
+            <li>Agent wrappers</li>
+          </ul>
+        </div>
+        <div class="layer core">
+          <strong>Core Product Truth</strong>
+          <ul>
+            <li>Domain models and validation</li>
+            <li>Command registry and envelopes</li>
+            <li>Evaluation and citation services</li>
+            <li>Application status history</li>
+            <li>Provider adapter contracts</li>
+          </ul>
+        </div>
+        <div class="layer">
+          <strong>Persistence and Outputs</strong>
+          <ul>
+            <li>SQLite source of truth</li>
+            <li>Markdown exports</li>
+            <li>CSV exports</li>
+            <li>JSON command envelopes</li>
+            <li>Phase 2 documents</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" aria-label="Feature plan sequence">
+      <h2>Feature Plan Sequence</h2>
+      <div class="flow">
+        <article class="step">
+          <span>001</span>
+          <strong>Bootstrap Core Contracts</strong>
+          <p>Monorepo skeleton, command envelope, public fixtures, and tests.</p>
+        </article>
+        <article class="step">
+          <span>002</span>
+          <strong>SQLite Model</strong>
+          <p>Profiles, jobs, evaluations, citations, applications, notes, exports, and agent runs.</p>
+        </article>
+        <article class="step">
+          <span>003</span>
+          <strong>Import, Evaluate, Export</strong>
+          <p>Manual imports, rubric evaluation, cited reports, tracker exports.</p>
+        </article>
+        <article class="step">
+          <span>004</span>
+          <strong>Clients and Wrappers</strong>
+          <p>CLI, TUI, web dashboard, and generated agent wrappers over one registry.</p>
+        </article>
+        <article class="step">
+          <span>005</span>
+          <strong>Browser Automation</strong>
+          <p>Safe extraction, draft/fill/review, evidence capture, no default submission.</p>
+        </article>
+        <article class="step">
+          <span>006</span>
+          <strong>Phase 2 Documents</strong>
+          <p>Tailoring, letters, answers, ATS checks, and PDF/DOCX generation.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" aria-label="Risk controls">
+      <h2>Risk Controls</h2>
+      <div class="risk-list">
+        <article class="panel risk">
+          <strong>Private data leakage</strong>
+          <p>Use public-generic fixtures and keep personal dogfooding data outside public defaults.</p>
+        </article>
+        <article class="panel risk">
+          <strong>Client drift</strong>
+          <p>Generate wrappers from the command registry and verify envelopes across clients.</p>
+        </article>
+        <article class="panel risk">
+          <strong>Opaque LLM output</strong>
+          <p>Store rubric versions, citations, provider metadata, and reversible evaluation records.</p>
+        </article>
+        <article class="panel risk">
+          <strong>Auto-submit ambiguity</strong>
+          <p>Browser automation defaults to extraction, draft, fill, review, and evidence capture only.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
